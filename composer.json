@@ -1,0 +1,15 @@
+{
+    "name": "yasuaki640/php-rendering-engine",
+    "autoload": {
+        "psr-4": {
+            "Yasuaki640\\PhpRenderingEngine\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "yasuaki640",
+            "email": "yasuaki640@gmail.com"
+        }
+    ],
+    "require": {}
+}
