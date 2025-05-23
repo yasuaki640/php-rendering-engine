@@ -1,0 +1,9 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Yasuaki640\PhpRenderingEngine\CLI;
+
+$cli = new CLI();
+$cli->run();

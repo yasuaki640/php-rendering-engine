@@ -11,5 +11,10 @@
             "email": "yasuaki640@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "php": ">=8.4"
+    },
+    "bin": [
+        "bin/hello"
+    ]
 }
