@@ -1,6 +1,6 @@
 <?php
 
-namespace MyApp\UriParser;
+namespace MyApp\UriParser; // FIXME: my-appの命名は調整する
 
 class UriParser
 {
