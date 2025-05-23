@@ -4,13 +4,33 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0d4ce70202df3efee007efbe6f9dc90",
-    "packages": [],
+    "content-hash": "db12b965978cbb0e4e4b16fc457dff67",
+    "packages": [
+        {
+            "name": "my-app/uri-parser",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "packages/uri-parser",
+                "reference": "2681784f8407bc0d4c55332acc75f3cd64b5a747"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MyApp\\UriParser\\": "src/"
+                }
+            },
+            "description": "A module for parsing URIs.",
+            "transport-options": {
+                "relative": true
+            }
+        }
+    ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {},
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": ">=8.4"

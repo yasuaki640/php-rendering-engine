@@ -1,0 +1,11 @@
+{
+    "name": "my-app/uri-parser",
+    "description": "A module for parsing URIs.",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "MyApp\\UriParser\\": "src/"
+        }
+    },
+    "require": {}
+}

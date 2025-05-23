@@ -12,9 +12,18 @@
         }
     ],
     "require": {
-        "php": ">=8.4"
+        "php": ">=8.4",
+        "my-app/uri-parser": "*"
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/uri-parser"
+        }
+    ],
     "bin": [
         "bin/hello"
-    ]
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
