@@ -16,15 +16,6 @@ composer cs-fix
 composer cs-check
 ```
 
-#### VS Codeでの使用
-
-VS Codeを使用している場合、以下のタスクが利用可能です：
-
-- `PHP CS Fixer - Fix`: コードを自動修正
-- `PHP CS Fixer - Check`: 修正が必要な箇所をチェック
-
-タスクは `Cmd+Shift+P` → `Tasks: Run Task` から実行できます。
-
 #### 設定
 
 PHP CS Fixerの設定は `.php-cs-fixer.php` ファイルで管理されています。主な設定：
