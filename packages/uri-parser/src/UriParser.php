@@ -11,6 +11,7 @@ class UriParser
         if ($parts === false) {
             throw new \InvalidArgumentException("Invalid URI: " . $uri);
         }
+
         return $parts;
     }
 }
