@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Tests\Token;
+namespace MyApp\Core\Renderer\Tests\Token;
+
 
 use MyApp\Core\Renderer\Token\Attribute;
 use MyApp\Core\Renderer\Token\CharToken;

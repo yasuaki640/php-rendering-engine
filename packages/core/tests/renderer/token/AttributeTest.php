@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Tests\Renderer;
+namespace MyApp\Core\Renderer\Tests\Token;
 
-use MyApp\Core\Renderer\Attribute;
+use MyApp\Core\Renderer\Token\Attribute;
 use PHPUnit\Framework\TestCase;
 
 class AttributeTest extends TestCase

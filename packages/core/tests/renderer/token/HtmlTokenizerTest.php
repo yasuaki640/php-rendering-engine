@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Tests\Token;
+namespace MyApp\Core\Renderer\Tests\Token;
 
 use MyApp\Core\Renderer\Token\CharToken;
 use MyApp\Core\Renderer\Token\EndTag;
@@ -34,7 +34,7 @@ class HtmlTokenizerTest extends TestCase
             $actualToken = $tokenizer->next();
             $this->assertNotNull($actualToken);
             $this->assertEquals($expectedToken->getType(), $actualToken->getType());
-            
+
             if ($expectedToken instanceof StartTag || $expectedToken instanceof EndTag) {
                 /** @var StartTag|EndTag $actualToken */
                 $this->assertEquals($expectedToken->getTag(), $actualToken->getTag());
@@ -97,11 +97,11 @@ class HtmlTokenizerTest extends TestCase
             $actualToken = $tokenizer->next();
             $this->assertNotNull($actualToken);
             $this->assertEquals($expectedToken->getType(), $actualToken->getType());
-            
+
             if ($expectedToken instanceof StartTag || $expectedToken instanceof EndTag) {
                 /** @var StartTag|EndTag $actualToken */
                 $this->assertEquals($expectedToken->getTag(), $actualToken->getTag());
-                
+
                 if ($expectedToken instanceof StartTag) {
                     /** @var StartTag $actualToken */
                     $this->assertEquals($expectedToken->isSelfClosing(), $actualToken->isSelfClosing());
