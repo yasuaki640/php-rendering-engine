@@ -43,7 +43,7 @@ class StartTag implements HtmlToken
     public function getAttribute(string $name): ?Attribute
     {
         foreach ($this->attributes as $attribute) {
-            if ($attribute->getName() === $name) {
+            if ($attribute->name === $name) {
                 return $attribute;
             }
         }
