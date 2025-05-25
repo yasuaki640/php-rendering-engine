@@ -4,20 +4,55 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c53c2c9ab51bc5d8937c3171771e990b",
+    "content-hash": "7a4ac0d9e6c5d160dc7141cc7bcec73c",
     "packages": [
+        {
+            "name": "my-app/core",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "packages/core",
+                "reference": "1cf50b37078931858f4c06e5c0ebf9843b8cf9e9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MyApp\\Core\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "MyApp\\Core\\Tests\\": "tests/"
+                }
+            },
+            "description": "Core components for the PHP rendering engine.",
+            "transport-options": {
+                "relative": true
+            }
+        },
         {
             "name": "my-app/uri-parser",
             "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "packages/uri-parser",
-                "reference": "2681784f8407bc0d4c55332acc75f3cd64b5a747"
+                "reference": "50a47b60ec4fc2e5fadfe382d11f74c185822329"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "MyApp\\UriParser\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "MyApp\\UriParser\\Tests\\": "tests/"
                 }
             },
             "description": "A module for parsing URIs.",

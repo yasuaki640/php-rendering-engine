@@ -1,0 +1,19 @@
+{
+    "name": "my-app/core",
+    "description": "Core components for the PHP rendering engine.",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "MyApp\\Core\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MyApp\\Core\\Tests\\": "tests/"
+        }
+    },
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "name": "my-app/net",
+    "description": "A module for network operations.",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "MyApp\\Net\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MyApp\\Net\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "my-app/core": "dev-main"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../core"
+        }
+    ]
+}

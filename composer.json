@@ -13,7 +13,8 @@
     ],
     "require": {
         "php": ">=8.4",
-        "my-app/uri-parser": "*"
+        "my-app/uri-parser": "*",
+        "my-app/core": "*"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0"
@@ -22,6 +23,10 @@
         {
             "type": "path",
             "url": "packages/uri-parser"
+        },
+        {
+            "type": "path",
+            "url": "packages/core"
         }
     ],
     "bin": [
