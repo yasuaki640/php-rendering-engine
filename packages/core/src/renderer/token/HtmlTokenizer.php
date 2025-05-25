@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MyApp\Core\Renderer\Token;
 
+use MyApp\Core\Renderer\Attribute;
+
 class HtmlTokenizer
 {
     private string $input;
@@ -110,6 +112,19 @@ class HtmlTokenizer
                     $this->appendTagName($c);
 
                     continue;
+                case State::BeforeAttributeName:
+                    if ($c === '/' || $c === '>' || $this->isEof()) {
+                        $this->reconsume = true;
+                        $this->state = State::AfterAttributeName;
+
+                        continue;
+                    }
+
+                    $this->reconsume = true;
+                    $this->state = State::AttributeName;
+                    $this->startNewAttribute();
+
+                    continue;
                 default:
                     throw new \InvalidArgumentException('Unknown state');
             }
@@ -181,5 +196,25 @@ class HtmlTokenizer
         }
 
         return $token;
+    }
+
+    private function startNewAttribute(): void
+    {
+        if ($this->currentTag === null) {
+            throw new \RuntimeException('currentTag should not be null');
+        }
+
+        if (!($this->currentTag instanceof StartTag)) {
+            throw new \RuntimeException('currentTag should be StartTag');
+        }
+
+        $currentAttributes = $this->currentTag->getAttributes();
+        $currentAttributes[] = new Attribute();
+
+        $this->currentTag = HtmlTokenFactory::createStartTag(
+            $this->currentTag->getTag(),
+            $this->currentTag->isSelfClosing(),
+            $currentAttributes
+        );
     }
 }
