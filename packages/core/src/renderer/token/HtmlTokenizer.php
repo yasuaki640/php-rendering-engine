@@ -13,6 +13,7 @@ class HtmlTokenizer
     private bool $reconsume = false;
     private State $state;
     private ?HtmlToken $currentTag = null;
+    private string $buf = '';
 
     public function __construct(string $input)
     {
@@ -148,6 +149,38 @@ class HtmlTokenizer
                     $this->appendAttribute($c, true);
 
                     continue;
+                case State::AfterAttributeName:
+                    if ($c === ' ') {
+                        // 空白文字は無視する
+                        continue;
+                    }
+
+                    if ($c === '/') {
+                        $this->state = State::SelfClosingStartTag;
+
+                        continue;
+                    }
+
+                    if ($c === '=') {
+                        $this->state = State::BeforeAttributeValue;
+
+                        continue;
+                    }
+
+                    if ($c === '>') {
+                        $this->state = State::Data;
+
+                        return $this->takeLatestToken();
+                    }
+
+                    if ($this->isEof()) {
+                        return HtmlTokenFactory::createEof();
+                    }
+
+                    $this->reconsume = true;
+                    $this->state = State::BeforeAttributeName;
+
+                    continue;
                 case State::BeforeAttributeValue:
                     if ($c === ' ') {
                         // 空白文字は無視する
@@ -259,6 +292,79 @@ class HtmlTokenizer
                     }
 
                     continue;
+                case State::ScriptData:
+                    if ($c === '<') {
+                        $this->state = State::ScriptDataLessThanSign;
+
+                        continue;
+                    }
+
+                    if ($this->isEof()) {
+                        return HtmlTokenFactory::createEof();
+                    }
+
+                    return HtmlTokenFactory::createChar($c);
+                case State::ScriptDataLessThanSign:
+                    if ($c === '/') {
+                        // 一時的なバッファを空文字でリセットする
+                        $this->buf = '';
+                        $this->state = State::ScriptDataEndTagOpen;
+
+                        continue;
+                    }
+
+                    $this->reconsume = true;
+                    $this->state = State::ScriptData;
+
+                    return HtmlTokenFactory::createChar('<');
+                case State::ScriptDataEndTagOpen:
+                    if (ctype_alpha($c)) {
+                        $this->reconsume = true;
+                        $this->state = State::ScriptDataEndTagName;
+                        $this->createTag(false);
+
+                        continue;
+                    }
+
+                    $this->reconsume = true;
+                    $this->state = State::ScriptData;
+
+                    // 仕様では、"<"と"/"の2つの文字トークンを返すとなっているが、
+                    // 私たちの実装ではnextメソッドからは一つのトークンしか返せないため、"<"のトークンのみを返す
+                    return HtmlTokenFactory::createChar('<');
+                case State::ScriptDataEndTagName:
+                    if ($c === '>') {
+                        $this->state = State::Data;
+
+                        return $this->takeLatestToken();
+                    }
+
+                    if (ctype_alpha($c)) {
+                        $this->buf .= $c;
+                        $this->appendTagName(strtolower($c));
+
+                        continue;
+                    }
+
+                    $this->state = State::TemporaryBuffer;
+                    $this->buf = '</' . $this->buf;
+                    $this->buf .= $c;
+
+                    continue;
+                case State::TemporaryBuffer:
+                    $this->reconsume = true;
+
+                    if (strlen($this->buf) === 0) {
+                        $this->state = State::ScriptData;
+
+                        continue;
+                    }
+
+                    // remove the first char
+                    $c = $this->buf[0];
+                    $this->buf = substr($this->buf, 1);
+
+                    return HtmlTokenFactory::createChar($c);
                 default:
                     throw new \InvalidArgumentException('Unknown state');
             }
@@ -369,7 +475,7 @@ class HtmlTokenizer
             throw new \RuntimeException('attributes array should not be empty');
         }
 
-        $attributes[$len - 1]->addChar($c, $isName);
+        $attributes[$len - 1] = $attributes[$len - 1]->addChar($c, $isName);
 
         $this->currentTag = HtmlTokenFactory::createStartTag(
             $this->currentTag->getTag(),
