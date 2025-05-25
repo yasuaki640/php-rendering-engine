@@ -6,23 +6,26 @@ namespace MyApp\Core\Renderer;
 
 class Attribute
 {
-    public function __construct(
-        public readonly string $name,
-        public readonly string $value
-    ) {}
+    public readonly string $name;
+    public readonly string $value;
 
-    public function getName(): string
+    public function __construct(string $name = '', string $value = '')
     {
-        return $this->name;
+        $this->name = $name;
+        $this->value = $value;
     }
 
-    public function getValue(): string
+    public static function new(): self
     {
-        return $this->value;
+        return new self();
     }
 
-    public function __toString(): string
+    public function addChar(string $char, bool $isName): self
     {
-        return "{$this->name}=\"{$this->value}\"";
+        if ($isName) {
+            return new self($this->name . $char, $this->value);
+        } else {
+            return new self($this->name, $this->value . $char);
+        }
     }
 }
