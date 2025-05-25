@@ -34,11 +34,16 @@ class HtmlTokenizerTest extends TestCase
             $actualToken = $tokenizer->next();
             $this->assertNotNull($actualToken);
             $this->assertEquals($expectedToken->getType(), $actualToken->getType());
-            $this->assertEquals($expectedToken->getTag(), $actualToken->getTag());
+            
+            if ($expectedToken instanceof StartTag || $expectedToken instanceof EndTag) {
+                /** @var StartTag|EndTag $actualToken */
+                $this->assertEquals($expectedToken->getTag(), $actualToken->getTag());
 
-            if ($expectedToken instanceof StartTag) {
-                $this->assertEquals($expectedToken->isSelfClosing(), $actualToken->isSelfClosing());
-                $this->assertEquals($expectedToken->getAttributes(), $actualToken->getAttributes());
+                if ($expectedToken instanceof StartTag) {
+                    /** @var StartTag $actualToken */
+                    $this->assertEquals($expectedToken->isSelfClosing(), $actualToken->isSelfClosing());
+                    $this->assertEquals($expectedToken->getAttributes(), $actualToken->getAttributes());
+                }
             }
         }
 
@@ -53,6 +58,7 @@ class HtmlTokenizerTest extends TestCase
         $startTagToken = $tokenizer->next();
         $this->assertNotNull($startTagToken);
         $this->assertInstanceOf(StartTag::class, $startTagToken);
+        /** @var StartTag $startTagToken */
         $this->assertEquals('p', $startTagToken->getTag());
         $this->assertFalse($startTagToken->isSelfClosing());
         $this->assertCount(3, $startTagToken->getAttributes());
@@ -72,6 +78,7 @@ class HtmlTokenizerTest extends TestCase
         $endTagToken = $tokenizer->next();
         $this->assertNotNull($endTagToken);
         $this->assertInstanceOf(EndTag::class, $endTagToken);
+        /** @var EndTag $endTagToken */
         $this->assertEquals('p', $endTagToken->getTag());
 
         $this->assertNull($tokenizer->next());
@@ -90,9 +97,17 @@ class HtmlTokenizerTest extends TestCase
             $actualToken = $tokenizer->next();
             $this->assertNotNull($actualToken);
             $this->assertEquals($expectedToken->getType(), $actualToken->getType());
-            $this->assertEquals($expectedToken->getTag(), $actualToken->getTag());
-            $this->assertEquals($expectedToken->isSelfClosing(), $actualToken->isSelfClosing());
-            $this->assertEquals($expectedToken->getAttributes(), $actualToken->getAttributes());
+            
+            if ($expectedToken instanceof StartTag || $expectedToken instanceof EndTag) {
+                /** @var StartTag|EndTag $actualToken */
+                $this->assertEquals($expectedToken->getTag(), $actualToken->getTag());
+                
+                if ($expectedToken instanceof StartTag) {
+                    /** @var StartTag $actualToken */
+                    $this->assertEquals($expectedToken->isSelfClosing(), $actualToken->isSelfClosing());
+                    $this->assertEquals($expectedToken->getAttributes(), $actualToken->getAttributes());
+                }
+            }
         }
 
         $this->assertNull($tokenizer->next());
@@ -122,11 +137,14 @@ class HtmlTokenizerTest extends TestCase
             $this->assertEquals($expectedToken->getType(), $actualToken->getType());
 
             if ($expectedToken instanceof CharToken) {
+                /** @var CharToken $actualToken */
                 $this->assertEquals($expectedToken->getChar(), $actualToken->getChar());
             } elseif ($expectedToken instanceof StartTag || $expectedToken instanceof EndTag) {
+                /** @var StartTag|EndTag $actualToken */
                 $this->assertEquals($expectedToken->getTag(), $actualToken->getTag());
 
                 if ($expectedToken instanceof StartTag) {
+                    /** @var StartTag $actualToken */
                     $this->assertEquals($expectedToken->isSelfClosing(), $actualToken->isSelfClosing());
                     $this->assertEquals($expectedToken->getAttributes(), $actualToken->getAttributes());
                 }
@@ -169,11 +187,14 @@ class HtmlTokenizerTest extends TestCase
             $this->assertEquals($expectedToken->getType(), $actualToken->getType());
 
             if ($expectedToken instanceof CharToken) {
+                /** @var CharToken $actualToken */
                 $this->assertEquals($expectedToken->getChar(), $actualToken->getChar());
             } elseif ($expectedToken instanceof StartTag || $expectedToken instanceof EndTag) {
+                /** @var StartTag|EndTag $actualToken */
                 $this->assertEquals($expectedToken->getTag(), $actualToken->getTag());
 
                 if ($expectedToken instanceof StartTag) {
+                    /** @var StartTag $actualToken */
                     $this->assertEquals($expectedToken->isSelfClosing(), $actualToken->isSelfClosing());
                     $this->assertEquals($expectedToken->getAttributes(), $actualToken->getAttributes());
                 }
@@ -217,11 +238,14 @@ class HtmlTokenizerTest extends TestCase
             $this->assertEquals($expectedToken->getType(), $actualToken->getType());
 
             if ($expectedToken instanceof CharToken) {
+                /** @var CharToken $actualToken */
                 $this->assertEquals($expectedToken->getChar(), $actualToken->getChar());
             } elseif ($expectedToken instanceof StartTag || $expectedToken instanceof EndTag) {
+                /** @var StartTag|EndTag $actualToken */
                 $this->assertEquals($expectedToken->getTag(), $actualToken->getTag());
 
                 if ($expectedToken instanceof StartTag) {
+                    /** @var StartTag $actualToken */
                     $this->assertEquals($expectedToken->isSelfClosing(), $actualToken->isSelfClosing());
                     $this->assertEquals($expectedToken->getAttributes(), $actualToken->getAttributes());
                 }
@@ -239,6 +263,7 @@ class HtmlTokenizerTest extends TestCase
         $actualToken = $tokenizer->next();
         $this->assertNotNull($actualToken);
         $this->assertInstanceOf(StartTag::class, $actualToken);
+        /** @var StartTag $actualToken */
         $this->assertEquals('input', $actualToken->getTag());
         $this->assertFalse($actualToken->isSelfClosing());
 
