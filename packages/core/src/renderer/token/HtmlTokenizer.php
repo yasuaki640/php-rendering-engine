@@ -148,6 +148,117 @@ class HtmlTokenizer
                     $this->appendAttribute($c, true);
 
                     continue;
+                case State::BeforeAttributeValue:
+                    if ($c === ' ') {
+                        // 空白文字は無視する
+                        continue;
+                    }
+
+                    if ($c === '"') {
+                        $this->state = State::AttributeValueDoubleQuoted;
+
+                        continue;
+                    }
+
+                    if ($c === "'") {
+                        $this->state = State::AttributeValueSingleQuoted;
+
+                        continue;
+                    }
+
+                    $this->reconsume = true;
+                    $this->state = State::AttributeValueUnquoted;
+
+                    continue;
+                case State::AttributeValueDoubleQuoted:
+                    if ($c === '"') {
+                        $this->state = State::AfterAttributeValueQuoted;
+
+                        continue;
+                    }
+
+                    if ($this->isEof()) {
+                        return HtmlTokenFactory::createEof();
+                    }
+
+                    $this->appendAttribute($c, false);
+
+                    continue;
+                case State::AttributeValueSingleQuoted:
+                    if ($c === "'") {
+                        $this->state = State::AfterAttributeValueQuoted;
+
+                        continue;
+                    }
+
+                    if ($this->isEof()) {
+                        return HtmlTokenFactory::createEof();
+                    }
+
+                    $this->appendAttribute($c, false);
+
+                    continue;
+                case State::AttributeValueUnquoted:
+                    if ($c === ' ') {
+                        $this->state = State::BeforeAttributeName;
+
+                        continue;
+                    }
+
+                    if ($c === '>') {
+                        $this->state = State::Data;
+
+                        return $this->takeLatestToken();
+                    }
+
+                    if ($this->isEof()) {
+                        return HtmlTokenFactory::createEof();
+                    }
+
+                    $this->appendAttribute($c, false);
+
+                    continue;
+                case State::AfterAttributeValueQuoted:
+                    if ($c === ' ') {
+                        $this->state = State::BeforeAttributeName;
+
+                        continue;
+                    }
+
+                    if ($c === '/') {
+                        $this->state = State::SelfClosingStartTag;
+
+                        continue;
+                    }
+
+                    if ($c === '>') {
+                        $this->state = State::Data;
+
+                        return $this->takeLatestToken();
+                    }
+
+                    if ($this->isEof()) {
+                        return HtmlTokenFactory::createEof();
+                    }
+
+                    $this->reconsume = true;
+                    $this->state = State::BeforeAttributeName;
+
+                    continue;
+                case State::SelfClosingStartTag:
+                    if ($c === '>') {
+                        $this->setSelfClosingFlag();
+                        $this->state = State::Data;
+
+                        return $this->takeLatestToken();
+                    }
+
+                    if ($this->isEof()) {
+                        // invalid parse error.
+                        return HtmlTokenFactory::createEof();
+                    }
+
+                    continue;
                 default:
                     throw new \InvalidArgumentException('Unknown state');
             }
@@ -264,6 +375,23 @@ class HtmlTokenizer
             $this->currentTag->getTag(),
             $this->currentTag->isSelfClosing(),
             $attributes
+        );
+    }
+
+    private function setSelfClosingFlag(): void
+    {
+        if ($this->currentTag === null) {
+            throw new \RuntimeException('currentTag should not be null');
+        }
+
+        if (! ($this->currentTag instanceof StartTag)) {
+            throw new \RuntimeException('currentTag should be StartTag');
+        }
+
+        $this->currentTag = HtmlTokenFactory::createStartTag(
+            $this->currentTag->getTag(),
+            true,
+            $this->currentTag->getAttributes()
         );
     }
 }
