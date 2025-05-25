@@ -171,7 +171,7 @@ class StateTest extends TestCase
     {
         $this->assertSame(State::Data, State::Data);
         $this->assertNotSame(State::Data, State::TagOpen);
-        
+
         $this->assertTrue(State::Data === State::Data);
         $this->assertFalse(State::Data === State::TagOpen);
     }
@@ -179,7 +179,7 @@ class StateTest extends TestCase
     public function testStateInArray(): void
     {
         $states = [State::Data, State::TagOpen, State::TagName];
-        
+
         $this->assertContains(State::Data, $states);
         $this->assertContains(State::TagOpen, $states);
         $this->assertContains(State::TagName, $states);

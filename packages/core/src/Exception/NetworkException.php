@@ -9,6 +9,4 @@ use Exception;
 /**
  * ネットワーク関連のエラーを表す例外クラス
  */
-class NetworkException extends Exception
-{
-}
+class NetworkException extends Exception {}

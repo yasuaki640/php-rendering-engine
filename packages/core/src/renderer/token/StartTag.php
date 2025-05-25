@@ -47,6 +47,7 @@ class StartTag implements HtmlToken
                 return $attribute;
             }
         }
+
         return null;
     }
 

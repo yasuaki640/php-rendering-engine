@@ -2,15 +2,15 @@
 
 namespace Yasuaki640\PhpRenderingEngine;
 
-use MyApp\Net\HttpClient;
 use MyApp\Core\HttpResponse;
+use MyApp\Net\HttpClient;
 
 class CLI
 {
     public function run(): void
     {
         $args = $_SERVER['argv'] ?? [];
-        
+
         if (count($args) > 1 && $args[1] === 'test-http') {
             $this->testHttpClient();
         } elseif (count($args) > 1 && $args[1] === 'test-host') {
@@ -29,7 +29,7 @@ class CLI
     private function testHttpClient(): void
     {
         $client = new HttpClient();
-        
+
         try {
             // 実際にアクセス可能なホストでテスト
             $response = $client->get("httpbin.org", 80, "get");
@@ -46,7 +46,7 @@ class CLI
     private function testHostClient(): void
     {
         $client = new HttpClient();
-        
+
         try {
             // Rustコードと同じパラメータでテスト: host.test:8000/test.html
             $response = $client->get("host.test", 8000, "test.html");
@@ -63,7 +63,7 @@ class CLI
     private function testExampleCom(): void
     {
         $client = new HttpClient();
-        
+
         try {
             // example.comでテスト（存在する実際のWebサイト）
             $response = $client->get("example.com", 80, "");
@@ -83,14 +83,14 @@ class CLI
         echo "Status Code: " . $response->statusCode . "\n";
         echo "Reason: " . $response->reason . "\n";
         echo "Headers:\n";
-        
+
         foreach ($response->headers as $header) {
             echo "  " . $header->name . ": " . $header->value . "\n";
         }
-        
+
         echo "Body:\n";
         echo $response->body . "\n";
-        
+
         echo "\nRaw Response:\n";
         echo "============\n";
         echo $response->rawResponse . "\n";

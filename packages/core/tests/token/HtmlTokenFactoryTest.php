@@ -17,7 +17,7 @@ class HtmlTokenFactoryTest extends TestCase
     public function testCreateStartTag(): void
     {
         $tag = HtmlTokenFactory::createStartTag('div');
-        
+
         $this->assertInstanceOf(StartTag::class, $tag);
         $this->assertEquals('div', $tag->getTag());
         $this->assertFalse($tag->isSelfClosing());
@@ -28,7 +28,7 @@ class HtmlTokenFactoryTest extends TestCase
     public function testCreateStartTagWithSelfClosing(): void
     {
         $tag = HtmlTokenFactory::createStartTag('img', true);
-        
+
         $this->assertInstanceOf(StartTag::class, $tag);
         $this->assertEquals('img', $tag->getTag());
         $this->assertTrue($tag->isSelfClosing());
@@ -42,9 +42,9 @@ class HtmlTokenFactoryTest extends TestCase
             new Attribute('id', 'test-id'),
             new Attribute('class', 'test-class'),
         ];
-        
+
         $tag = HtmlTokenFactory::createStartTag('div', false, $attributes);
-        
+
         $this->assertInstanceOf(StartTag::class, $tag);
         $this->assertEquals('div', $tag->getTag());
         $this->assertFalse($tag->isSelfClosing());
@@ -58,9 +58,9 @@ class HtmlTokenFactoryTest extends TestCase
             new Attribute('src', 'image.jpg'),
             new Attribute('alt', 'Test image'),
         ];
-        
+
         $tag = HtmlTokenFactory::createStartTag('img', true, $attributes);
-        
+
         $this->assertInstanceOf(StartTag::class, $tag);
         $this->assertEquals('img', $tag->getTag());
         $this->assertTrue($tag->isSelfClosing());
@@ -71,7 +71,7 @@ class HtmlTokenFactoryTest extends TestCase
     public function testCreateEndTag(): void
     {
         $tag = HtmlTokenFactory::createEndTag('div');
-        
+
         $this->assertInstanceOf(EndTag::class, $tag);
         $this->assertEquals('div', $tag->getTag());
         $this->assertEquals('EndTag', $tag->getType());
@@ -80,7 +80,7 @@ class HtmlTokenFactoryTest extends TestCase
     public function testCreateEndTagWithDifferentNames(): void
     {
         $tagNames = ['html', 'head', 'body', 'div', 'span', 'h1', 'h2', 'p'];
-        
+
         foreach ($tagNames as $tagName) {
             $tag = HtmlTokenFactory::createEndTag($tagName);
             $this->assertInstanceOf(EndTag::class, $tag);
@@ -92,7 +92,7 @@ class HtmlTokenFactoryTest extends TestCase
     public function testCreateChar(): void
     {
         $token = HtmlTokenFactory::createChar('a');
-        
+
         $this->assertInstanceOf(CharToken::class, $token);
         $this->assertEquals('a', $token->getChar());
         $this->assertEquals('Char', $token->getType());
@@ -101,7 +101,7 @@ class HtmlTokenFactoryTest extends TestCase
     public function testCreateCharWithSpecialCharacters(): void
     {
         $specialChars = [' ', '\n', '\t', '<', '>', '&', '"', "'"];
-        
+
         foreach ($specialChars as $char) {
             $token = HtmlTokenFactory::createChar($char);
             $this->assertInstanceOf(CharToken::class, $token);
@@ -113,7 +113,7 @@ class HtmlTokenFactoryTest extends TestCase
     public function testCreateCharWithMultibyteCharacter(): void
     {
         $token = HtmlTokenFactory::createChar('あ');
-        
+
         $this->assertInstanceOf(CharToken::class, $token);
         $this->assertEquals('あ', $token->getChar());
         $this->assertEquals('Char', $token->getType());
@@ -122,7 +122,7 @@ class HtmlTokenFactoryTest extends TestCase
     public function testCreateEof(): void
     {
         $token = HtmlTokenFactory::createEof();
-        
+
         $this->assertInstanceOf(EofToken::class, $token);
         $this->assertEquals('Eof', $token->getType());
     }
@@ -131,7 +131,7 @@ class HtmlTokenFactoryTest extends TestCase
     {
         $token1 = HtmlTokenFactory::createEof();
         $token2 = HtmlTokenFactory::createEof();
-        
+
         $this->assertInstanceOf(EofToken::class, $token1);
         $this->assertInstanceOf(EofToken::class, $token2);
         $this->assertEquals($token1->getType(), $token2->getType());
@@ -141,7 +141,7 @@ class HtmlTokenFactoryTest extends TestCase
     public function testCreateAttribute(): void
     {
         $attribute = HtmlTokenFactory::createAttribute('id', 'test-value');
-        
+
         $this->assertInstanceOf(Attribute::class, $attribute);
         $this->assertEquals('id', $attribute->name);
         $this->assertEquals('test-value', $attribute->value);
@@ -150,7 +150,7 @@ class HtmlTokenFactoryTest extends TestCase
     public function testCreateAttributeWithEmptyValues(): void
     {
         $attribute = HtmlTokenFactory::createAttribute('', '');
-        
+
         $this->assertInstanceOf(Attribute::class, $attribute);
         $this->assertEquals('', $attribute->name);
         $this->assertEquals('', $attribute->value);
@@ -159,7 +159,7 @@ class HtmlTokenFactoryTest extends TestCase
     public function testCreateAttributeWithSpecialCharacters(): void
     {
         $attribute = HtmlTokenFactory::createAttribute('data-test', 'value with spaces & symbols');
-        
+
         $this->assertInstanceOf(Attribute::class, $attribute);
         $this->assertEquals('data-test', $attribute->name);
         $this->assertEquals('value with spaces & symbols', $attribute->value);
@@ -169,19 +169,19 @@ class HtmlTokenFactoryTest extends TestCase
     {
         $tag1 = HtmlTokenFactory::createStartTag('div');
         $tag2 = HtmlTokenFactory::createStartTag('div');
-        
+
         $this->assertNotSame($tag1, $tag2);
         $this->assertEquals($tag1->getTag(), $tag2->getTag());
-        
+
         $endTag1 = HtmlTokenFactory::createEndTag('div');
         $endTag2 = HtmlTokenFactory::createEndTag('div');
-        
+
         $this->assertNotSame($endTag1, $endTag2);
         $this->assertEquals($endTag1->getTag(), $endTag2->getTag());
-        
+
         $char1 = HtmlTokenFactory::createChar('a');
         $char2 = HtmlTokenFactory::createChar('a');
-        
+
         $this->assertNotSame($char1, $char2);
         $this->assertEquals($char1->getChar(), $char2->getChar());
     }
@@ -195,19 +195,19 @@ class HtmlTokenFactoryTest extends TestCase
             HtmlTokenFactory::createAttribute('data-toggle', 'modal'),
             HtmlTokenFactory::createAttribute('data-target', '#myModal'),
         ];
-        
+
         $tag = HtmlTokenFactory::createStartTag('div', false, $attributes);
-        
+
         $this->assertInstanceOf(StartTag::class, $tag);
         $this->assertEquals('div', $tag->getTag());
         $this->assertFalse($tag->isSelfClosing());
         $this->assertCount(4, $tag->getAttributes());
-        
+
         $this->assertTrue($tag->hasAttribute('id'));
         $this->assertTrue($tag->hasAttribute('class'));
         $this->assertTrue($tag->hasAttribute('data-toggle'));
         $this->assertTrue($tag->hasAttribute('data-target'));
-        
+
         $idAttr = $tag->getAttribute('id');
         $this->assertEquals('main-content', $idAttr->value);
     }

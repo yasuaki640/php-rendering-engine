@@ -9,6 +9,4 @@ use Exception;
 /**
  * その他の汎用的なエラーを表す例外クラス
  */
-class OtherException extends Exception
-{
-}
+class OtherException extends Exception {}

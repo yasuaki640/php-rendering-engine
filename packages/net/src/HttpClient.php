@@ -55,6 +55,7 @@ class HttpClient
             $buf = socket_read($socket, 4096);
             if ($buf === false) {
                 socket_close($socket);
+
                 throw new \Exception("Failed to receive a request from TCP stream");
             }
             if (strlen($buf) === 0) {
@@ -65,7 +66,7 @@ class HttpClient
 
         socket_close($socket);
 
-        if (!mb_check_encoding($received, 'UTF-8')) {
+        if (! mb_check_encoding($received, 'UTF-8')) {
             throw new \Exception("Invalid received response: not valid UTF-8");
         }
 

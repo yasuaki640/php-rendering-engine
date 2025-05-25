@@ -25,52 +25,53 @@ class Url
     private function extractHost(): string
     {
         $urlParts = explode('/', ltrim($this->url, 'http://'), 2);
-        
+
         $colonPosition = strpos($urlParts[0], ':');
         if ($colonPosition !== false) {
             return substr($urlParts[0], 0, $colonPosition);
         }
-        
+
         return $urlParts[0];
     }
 
     private function extractPath(): string
     {
         $urlParts = explode('/', ltrim($this->url, 'http://'), 2);
-        
+
         if (count($urlParts) < 2) {
             return '';
         }
-        
+
         $pathAndSearchpart = explode('?', $urlParts[1], 2);
+
         return $pathAndSearchpart[0];
     }
 
     private function extractPort(): string
     {
         $urlParts = explode('/', ltrim($this->url, 'http://'), 2);
-        
+
         $colonPosition = strpos($urlParts[0], ':');
         if ($colonPosition !== false) {
             return substr($urlParts[0], $colonPosition + 1);
         }
-        
+
         return '80';
     }
 
     private function extractSearchpart(): string
     {
         $urlParts = explode('/', ltrim($this->url, 'http://'), 2);
-        
+
         if (count($urlParts) < 2) {
             return '';
         }
-        
+
         $pathAndSearchpart = explode('?', $urlParts[1], 2);
         if (count($pathAndSearchpart) < 2) {
             return '';
         }
-        
+
         return $pathAndSearchpart[1];
     }
 
@@ -79,7 +80,7 @@ class Url
      */
     public function parse(): self
     {
-        if (!$this->isHttp()) {
+        if (! $this->isHttp()) {
             throw new \Exception('Only HTTP scheme is supported.');
         }
 

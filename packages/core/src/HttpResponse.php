@@ -25,14 +25,14 @@ class HttpResponse
     ) {
         $trimed = ltrim($rawResponse);
         $preprocessedResponse = str_replace("\r\n", "\n", $trimed);
-        
+
         $firstNewlinePos = strpos($preprocessedResponse, "\n");
         if ($firstNewlinePos === false) {
             throw new NetworkException(
                 "invalid http response: " . $preprocessedResponse
             );
         }
-        
+
         $statusLine = substr($preprocessedResponse, 0, $firstNewlinePos);
         $remaining = substr($preprocessedResponse, $firstNewlinePos + 1);
 
@@ -63,7 +63,7 @@ class HttpResponse
         $statuses = explode(' ', $statusLine);
 
         $this->version = $statuses[0] ?? '';
-        $this->statusCode = isset($statuses[1]) ? (int)$statuses[1] : 404;
+        $this->statusCode = isset($statuses[1]) ? (int) $statuses[1] : 404;
         $this->reason = $statuses[2] ?? '';
         $this->headers = $headers;
         $this->body = $body;
@@ -79,6 +79,7 @@ class HttpResponse
                 return $header->value;
             }
         }
+
         return null;
     }
 }
