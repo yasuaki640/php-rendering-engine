@@ -14,7 +14,8 @@
     "require": {
         "php": ">=8.4",
         "my-app/uri-parser": "*",
-        "my-app/core": "*"
+        "my-app/core": "*",
+        "my-app/net": "*"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0"
@@ -27,6 +28,10 @@
         {
             "type": "path",
             "url": "packages/core"
+        },
+        {
+            "type": "path",
+            "url": "packages/net"
         }
     ],
     "bin": [
@@ -34,7 +39,10 @@
     ],
     "scripts": {
         "cs-fix": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix",
-        "cs-check": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix --dry-run --diff"
+        "cs-check": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix --dry-run --diff",
+        "test-http": "php bin/hello test-http",
+        "test-host": "php bin/hello test-host",
+        "test-example": "php bin/hello test-example"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

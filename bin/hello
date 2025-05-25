@@ -3,7 +3,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use MyApp\UriParser\CLI;
+use Yasuaki640\PhpRenderingEngine\CLI;
 
 $cli = new CLI();
 $cli->run();

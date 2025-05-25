@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7a4ac0d9e6c5d160dc7141cc7bcec73c",
+    "content-hash": "a9b828843abe5ef3e27799c5feb66413",
     "packages": [
         {
             "name": "my-app/core",
@@ -29,6 +29,36 @@
                 }
             },
             "description": "Core components for the PHP rendering engine.",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "my-app/net",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "packages/net",
+                "reference": "fad35593a1443f5c4398d41ab6fe974fd71ba693"
+            },
+            "require": {
+                "my-app/core": "dev-main"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MyApp\\Net\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "MyApp\\Net\\Tests\\": "tests/"
+                }
+            },
+            "description": "A module for network operations.",
             "transport-options": {
                 "relative": true
             }
