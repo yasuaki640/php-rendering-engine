@@ -146,18 +146,6 @@ class HtmlTokenizer
         }
     }
 
-    private function takeLatestToken(): HtmlToken
-    {
-        if ($this->currentTag === null) {
-            throw new \RuntimeException('currentTag should not be null');
-        }
-
-        $token = $this->currentTag;
-        $this->currentTag = null;
-
-        return $token;
-    }
-
     private function appendTagName(string $c): void
     {
         if ($this->currentTag === null) {
@@ -177,5 +165,21 @@ class HtmlTokenizer
         } else {
             throw new \RuntimeException('currentTag should be either StartTag or EndTag');
         }
+    }
+
+    private function takeLatestToken(): ?HtmlToken
+    {
+        if ($this->currentTag === null) {
+            throw new \RuntimeException('currentTag should not be null');
+        }
+
+        $token = $this->currentTag;
+        $this->currentTag = null;
+
+        if ($this->currentTag !== null) {
+            throw new \RuntimeException('currentTag should be null after taking latest token');
+        }
+
+        return $token;
     }
 }
