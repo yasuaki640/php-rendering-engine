@@ -1,7 +1,7 @@
 # GitHub Copilot Instructions
 
 ## プロジェクト概要
-このプロジェクトは、PHPで簡易webブラウザを実装するプロジェクトです。 ( https://github.com/d0iasm/sababook を参考にしています。)
+このプロジェクトは、PHPで簡易webブラウザを実装するプロジェクトです。 ( ルートディレクトリに存在する `sababook` プロジェクトを参考にしています。)
 最終的には、HTMLとCSSを解析してレンダリングし、JavaScriptを実行できるブラウザを目指しています。
 
 ## プロジェクトの目的
