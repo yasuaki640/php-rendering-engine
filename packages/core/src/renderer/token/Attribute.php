@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer;
+namespace MyApp\Core\Renderer\Token;
 
 class Attribute
 {

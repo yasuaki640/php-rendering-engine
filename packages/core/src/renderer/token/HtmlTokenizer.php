@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MyApp\Core\Renderer\Token;
 
-use MyApp\Core\Renderer\Attribute;
+use MyApp\Core\Renderer\Token\Attribute;
 
 class HtmlTokenizer
 {

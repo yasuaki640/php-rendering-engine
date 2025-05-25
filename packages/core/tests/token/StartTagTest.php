@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MyApp\Core\Tests\Token;
 
-use MyApp\Core\Renderer\Attribute;
+use MyApp\Core\Renderer\Token\Attribute;
 use MyApp\Core\Renderer\Token\StartTag;
 use PHPUnit\Framework\TestCase;
 
