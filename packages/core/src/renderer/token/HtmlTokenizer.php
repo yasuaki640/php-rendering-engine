@@ -125,6 +125,29 @@ class HtmlTokenizer
                     $this->startNewAttribute();
 
                     continue;
+                case State::AttributeName:
+                    if ($c === ' ' || $c === '/' || $c === '>' || $this->isEof()) {
+                        $this->reconsume = true;
+                        $this->state = State::AfterAttributeName;
+
+                        continue;
+                    }
+
+                    if ($c === '=') {
+                        $this->state = State::BeforeAttributeValue;
+
+                        continue;
+                    }
+
+                    if (ctype_upper($c)) {
+                        $this->appendAttribute(strtolower($c), true);
+
+                        continue;
+                    }
+
+                    $this->appendAttribute($c, true);
+
+                    continue;
                 default:
                     throw new \InvalidArgumentException('Unknown state');
             }
@@ -204,7 +227,7 @@ class HtmlTokenizer
             throw new \RuntimeException('currentTag should not be null');
         }
 
-        if (!($this->currentTag instanceof StartTag)) {
+        if (! ($this->currentTag instanceof StartTag)) {
             throw new \RuntimeException('currentTag should be StartTag');
         }
 
@@ -215,6 +238,32 @@ class HtmlTokenizer
             $this->currentTag->getTag(),
             $this->currentTag->isSelfClosing(),
             $currentAttributes
+        );
+    }
+
+    private function appendAttribute(string $c, bool $isName): void
+    {
+        if ($this->currentTag === null) {
+            throw new \RuntimeException('currentTag should not be null');
+        }
+
+        if (! ($this->currentTag instanceof StartTag)) {
+            throw new \RuntimeException('currentTag should be StartTag');
+        }
+
+        $attributes = $this->currentTag->getAttributes();
+        $len = count($attributes);
+
+        if ($len === 0) {
+            throw new \RuntimeException('attributes array should not be empty');
+        }
+
+        $attributes[$len - 1]->addChar($c, $isName);
+
+        $this->currentTag = HtmlTokenFactory::createStartTag(
+            $this->currentTag->getTag(),
+            $this->currentTag->isSelfClosing(),
+            $attributes
         );
     }
 }
