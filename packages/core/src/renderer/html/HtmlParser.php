@@ -506,10 +506,18 @@ class HtmlParser
         if ($lastChild && $lastChild->getKind() === NodeKind::Text) {
             $currentText = $lastChild->getTextContent() ?? '';
             $lastChild->setTextContent($currentText . $char);
-        } else {
-            $textNode = new Node(NodeKind::Text, $char);
-            $currentNode->appendChild($textNode);
+            return;
         }
+
+        // 改行文字や空白文字の場合、新しいテキストノードは作成しない
+        // ただし、既存のテキストノードがある場合は上記で文字を追加済み
+        if ($char === "\n" || $char === ' ') {
+            return;
+        }
+
+        // 新しいテキストノードを作成
+        $textNode = new Node(NodeKind::Text, $char);
+        $currentNode->appendChild($textNode);
     }
 
     /**

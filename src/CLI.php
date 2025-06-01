@@ -3,6 +3,7 @@
 namespace Yasuaki640\PhpRenderingEngine;
 
 use MyApp\Core\Browser;
+use MyApp\Core\DomUtils;
 use MyApp\Core\HttpResponse;
 use MyApp\Net\HttpClient;
 
@@ -104,6 +105,26 @@ class CLI
     {
         echo "=== Browser and Page Test ===\n\n";
 
+        // main.rsのTEST_HTTP_RESPONSEを参考にしたテストHTTPレスポンス
+        $testHttpResponse = <<<'HTML'
+HTTP/1.1 200 OK
+Data: xx xx xx
+
+
+<html>
+<head></head>
+<body>
+  <h1 id="title">H1 title</h1>
+  <h2 class="class">H2 title</h2>
+  <p>Test text.</p>
+  <p>
+    <a href="example.com">Link1</a>
+    <a href="example.com">Link2</a>
+  </p>
+</body>
+</html>
+HTML;
+
         // ブラウザーを作成
         $browser = new Browser();
         echo "Created browser with {$browser->getPageCount()} page(s)\n";
@@ -112,74 +133,115 @@ class CLI
         $currentPage = $browser->getCurrentPage();
         echo "Current page loaded: " . ($currentPage->isLoaded() ? 'Yes' : 'No') . "\n\n";
 
-        // シンプルなHTMLでテスト
-        echo "--- Testing with simple HTML ---\n";
+        // テストHTTPレスポンスでテスト
+        echo "--- Testing with test HTTP response (from main.rs) ---\n";
 
-        $htmlContent = '<html><head><title>Test Page</title></head><body><h1>Hello, World!</h1><p>This is a test page.</p></body></html>';
-        $rawResponse = "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" . $htmlContent;
+        try {
+            $response = new HttpResponse($testHttpResponse);
+            $domString = $currentPage->receiveResponse($response);
 
-        $response = new HttpResponse($rawResponse);
-        $currentPage->receiveResponse($response);
+            echo "Page loaded: " . ($currentPage->isLoaded() ? 'Yes' : 'No') . "\n";
 
-        echo "Page loaded: " . ($currentPage->isLoaded() ? 'Yes' : 'No') . "\n";
+            if ($currentPage->isLoaded()) {
+                $frame = $currentPage->getFrame();
+                $document = $frame->getDocument();
 
-        if ($currentPage->isLoaded()) {
-            $frame = $currentPage->getFrame();
-            $document = $frame->getDocument();
+                echo "Document created successfully\n\n";
 
-            echo "Document created successfully\n";
+                // DOMツリーを可視化（utils.rsのconvert_dom_to_string相当）
+                echo "--- DOM Tree Structure ---\n";
+                $domTreeString = DomUtils::convertDomToString($document);
+                echo $domTreeString;
+                echo "--- End of DOM Tree ---\n\n";
 
-            // HTML要素を探す
-            $htmlElement = $document->getFirstChild();
-            if ($htmlElement && $htmlElement->getElementKind()?->value === 'html') {
-                echo "HTML element found\n";
-
-                // HEAD要素を探す
-                $child = $htmlElement->getFirstChild();
-                while ($child) {
-                    if ($child->getElementKind()?->value === 'head') {
-                        echo "HEAD element found\n";
-
-                        break;
-                    }
-                    $child = $child->getNextSibling();
-                }
-
-                // BODY要素を探す
-                $child = $htmlElement->getFirstChild();
-                while ($child) {
-                    if ($child->getElementKind()?->value === 'body') {
-                        echo "BODY element found\n";
-
-                        break;
-                    }
-                    $child = $child->getNextSibling();
-                }
+                // 基本的な要素の確認
+                $this->verifyBasicElements($document);
             }
+        } catch (\Exception $e) {
+            echo "Error processing HTTP response: " . $e->getMessage() . "\n";
+            echo "Stack trace:\n";
+            echo $e->getTraceAsString() . "\n\n";
         }
 
-        echo "\n--- Testing with new page ---\n";
+        echo "\n--- Testing with simple HTML ---\n";
 
+        // 新しいページでシンプルなHTMLをテスト
         $newPage = $browser->addPage();
-        echo "Added new page. Total pages: {$browser->getPageCount()}\n";
-
-        // 新しいページに移動
         $browser->setActivePageIndex(1);
         $currentPage = $browser->getCurrentPage();
 
-        if ($currentPage === $newPage) {
-            echo "Successfully switched to new page\n";
+        $simpleHtmlContent = '<html><head><title>Simple Test</title></head><body><h1>Hello, World!</h1><p>This is a simple test page.</p></body></html>';
+        $simpleRawResponse = "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" . $simpleHtmlContent;
+
+        try {
+            $response = new HttpResponse($simpleRawResponse);
+            $currentPage->receiveResponse($response);
+
+            echo "Simple page loaded: " . ($currentPage->isLoaded() ? 'Yes' : 'No') . "\n";
+
+            if ($currentPage->isLoaded()) {
+                $frame = $currentPage->getFrame();
+                $document = $frame->getDocument();
+                echo "\n--- Simple DOM Tree Structure ---\n";
+                $domTreeString = DomUtils::convertDomToString($document);
+                echo $domTreeString;
+                echo "--- End of Simple DOM Tree ---\n";
+            }
+        } catch (\Exception $e) {
+            echo "Error processing simple HTML: " . $e->getMessage() . "\n";
         }
 
-        // 新しいページでHTMLをロード
-        $htmlContent = '<body><div>New Page Content</div></body>';
-        $rawResponse = "HTTP/1.1 200 OK\n\n" . $htmlContent;
+        echo "\nBrowser and Page test completed successfully!\n";
+    }
 
-        $response = new HttpResponse($rawResponse);
-        $currentPage->receiveResponse($response);
+    /**
+     * 基本的なHTML要素が正しく作成されているかを確認
+     */
+    private function verifyBasicElements($document): void
+    {
+        echo "--- Verifying basic elements ---\n";
 
-        echo "New page loaded: " . ($currentPage->isLoaded() ? 'Yes' : 'No') . "\n\n";
+        // HTML要素を探す
+        $htmlElement = $document->getFirstChild();
+        if ($htmlElement && $htmlElement->getElementKind()?->value === 'html') {
+            echo "✓ HTML element found\n";
 
-        echo "Browser and Page test completed successfully!\n";
+            // HEAD要素を探す
+            $child = $htmlElement->getFirstChild();
+            while ($child) {
+                if ($child->getElementKind()?->value === 'head') {
+                    echo "✓ HEAD element found\n";
+
+                    break;
+                }
+                $child = $child->getNextSibling();
+            }
+
+            // BODY要素を探す
+            $child = $htmlElement->getFirstChild();
+            while ($child) {
+                if ($child->getElementKind()?->value === 'body') {
+                    echo "✓ BODY element found\n";
+
+                    // BODY内のH1要素を探す
+                    $bodyChild = $child->getFirstChild();
+                    while ($bodyChild) {
+                        if ($bodyChild->getElementKind()?->value === 'h1') {
+                            echo "✓ H1 element found in BODY\n";
+
+                            break;
+                        }
+                        $bodyChild = $bodyChild->getNextSibling();
+                    }
+
+                    break;
+                }
+                $child = $child->getNextSibling();
+            }
+        } else {
+            echo "✗ HTML element not found\n";
+        }
+
+        echo "--- End of verification ---\n";
     }
 }
