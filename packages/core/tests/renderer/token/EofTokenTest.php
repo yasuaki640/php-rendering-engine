@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MyApp\Core\Renderer\Tests\Token;
 
-
 use MyApp\Core\Renderer\Token\EofToken;
 use PHPUnit\Framework\TestCase;
 

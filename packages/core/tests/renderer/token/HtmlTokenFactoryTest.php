@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MyApp\Core\Renderer\Tests\Token;
 
-
 use MyApp\Core\Renderer\Token\Attribute;
 use MyApp\Core\Renderer\Token\CharToken;
 use MyApp\Core\Renderer\Token\EndTag;
