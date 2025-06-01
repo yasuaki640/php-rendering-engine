@@ -52,12 +52,7 @@ php-rendering-engine/
 - テスト実行: `./vendor/bin/phpunit`
 
 #### テストの出力が見えない場合の対処法
-テストの詳細な出力や警告が表示されない場合は、以下のオプションを使用：
-- 詳細出力: `./vendor/bin/phpunit --verbose`
-- より詳細な出力: `./vendor/bin/phpunit --debug`
-- 警告も表示: `./vendor/bin/phpunit --display-warnings`
-- 非推奨警告も表示: `./vendor/bin/phpunit --display-deprecations`
-- 全ての出力: `./vendor/bin/phpunit --verbose --display-warnings --display-deprecations`
+テストの詳細な出力や警告が表示されない場合は、標準エラー出力に出力されている場合がある。
 
 ### ファイル命名規約
 - クラス名はPascalCase
