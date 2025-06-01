@@ -2,6 +2,7 @@
 
 namespace Yasuaki640\PhpRenderingEngine;
 
+use MyApp\Core\Browser;
 use MyApp\Core\HttpResponse;
 use MyApp\Net\HttpClient;
 
@@ -17,11 +18,14 @@ class CLI
             $this->testHostClient();
         } elseif (count($args) > 1 && $args[1] === 'test-example') {
             $this->testExampleCom();
+        } elseif (count($args) > 1 && $args[1] === 'test-browser') {
+            $this->testBrowser();
         } else {
             echo "Available commands:\n";
             echo "  test-http     - Test HTTP client with httpbin.org\n";
             echo "  test-host     - Test HTTP client with host.test:8000\n";
             echo "  test-example  - Test HTTP client with example.com\n";
+            echo "  test-browser  - Test Browser and Page classes\n";
             echo "\nUsage: php bin/hello <command>\n";
         }
     }
@@ -94,5 +98,88 @@ class CLI
         echo "\nRaw Response:\n";
         echo "============\n";
         echo $response->rawResponse . "\n";
+    }
+
+    private function testBrowser(): void
+    {
+        echo "=== Browser and Page Test ===\n\n";
+
+        // ブラウザーを作成
+        $browser = new Browser();
+        echo "Created browser with {$browser->getPageCount()} page(s)\n";
+
+        // 現在のページを取得
+        $currentPage = $browser->getCurrentPage();
+        echo "Current page loaded: " . ($currentPage->isLoaded() ? 'Yes' : 'No') . "\n\n";
+
+        // シンプルなHTMLでテスト
+        echo "--- Testing with simple HTML ---\n";
+
+        $htmlContent = '<html><head><title>Test Page</title></head><body><h1>Hello, World!</h1><p>This is a test page.</p></body></html>';
+        $rawResponse = "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" . $htmlContent;
+
+        $response = new HttpResponse($rawResponse);
+        $currentPage->receiveResponse($response);
+
+        echo "Page loaded: " . ($currentPage->isLoaded() ? 'Yes' : 'No') . "\n";
+
+        if ($currentPage->isLoaded()) {
+            $frame = $currentPage->getFrame();
+            $document = $frame->getDocument();
+
+            echo "Document created successfully\n";
+
+            // HTML要素を探す
+            $htmlElement = $document->getFirstChild();
+            if ($htmlElement && $htmlElement->getElementKind()?->value === 'html') {
+                echo "HTML element found\n";
+
+                // HEAD要素を探す
+                $child = $htmlElement->getFirstChild();
+                while ($child) {
+                    if ($child->getElementKind()?->value === 'head') {
+                        echo "HEAD element found\n";
+
+                        break;
+                    }
+                    $child = $child->getNextSibling();
+                }
+
+                // BODY要素を探す
+                $child = $htmlElement->getFirstChild();
+                while ($child) {
+                    if ($child->getElementKind()?->value === 'body') {
+                        echo "BODY element found\n";
+
+                        break;
+                    }
+                    $child = $child->getNextSibling();
+                }
+            }
+        }
+
+        echo "\n--- Testing with new page ---\n";
+
+        $newPage = $browser->addPage();
+        echo "Added new page. Total pages: {$browser->getPageCount()}\n";
+
+        // 新しいページに移動
+        $browser->setActivePageIndex(1);
+        $currentPage = $browser->getCurrentPage();
+
+        if ($currentPage === $newPage) {
+            echo "Successfully switched to new page\n";
+        }
+
+        // 新しいページでHTMLをロード
+        $htmlContent = '<body><div>New Page Content</div></body>';
+        $rawResponse = "HTTP/1.1 200 OK\n\n" . $htmlContent;
+
+        $response = new HttpResponse($rawResponse);
+        $currentPage->receiveResponse($response);
+
+        echo "New page loaded: " . ($currentPage->isLoaded() ? 'Yes' : 'No') . "\n\n";
+
+        echo "Browser and Page test completed successfully!\n";
     }
 }
