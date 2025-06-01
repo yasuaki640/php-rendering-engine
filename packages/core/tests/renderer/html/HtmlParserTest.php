@@ -191,4 +191,73 @@ class HtmlParserTest extends TestCase
         $parser->constructTree();
         $this->assertEmpty($parser->getStackOfOpenElements());
     }
+
+    /**
+     * head要素とbody要素の兄弟関係を詳細にテスト（Rustのtest_bodyとtest_textと同等）
+     */
+    public function testBodyStructure(): void
+    {
+        // 基本的なDOM構造のテスト
+        $html = '<html><head></head><body></body></html>';
+        $parser = new HtmlParser($html);
+        
+        $window = $parser->constructTree();
+        $document = $window->getDocument();
+        
+        // ドキュメントノードの確認
+        $this->assertNotNull($document);
+        $this->assertEquals(NodeKind::Document, $document->getKind());
+        
+        // HTML要素がドキュメントの最初の子であることを確認
+        $htmlElement = $document->getFirstChild();
+        $this->assertNotNull($htmlElement);
+        $this->assertEquals(NodeKind::Element, $htmlElement->getKind());
+        $this->assertEquals('html', $htmlElement->getElementKind()?->value);
+        
+        // HEAD要素がHTML要素の最初の子であることを確認
+        $headElement = $htmlElement->getFirstChild();
+        $this->assertNotNull($headElement);
+        $this->assertEquals(NodeKind::Element, $headElement->getKind());
+        $this->assertEquals('head', $headElement->getElementKind()?->value);
+        
+        // BODY要素がHEAD要素の次の兄弟であることを確認
+        $bodyElement = $headElement->getNextSibling();
+        $this->assertNotNull($bodyElement);
+        $this->assertEquals(NodeKind::Element, $bodyElement->getKind());
+        $this->assertEquals('body', $bodyElement->getElementKind()?->value);
+        
+        // BODY要素の次の兄弟が存在しないことを確認
+        $this->assertNull($bodyElement->getNextSibling());
+        
+        // HEAD要素の前の兄弟が存在しないことを確認
+        $this->assertNull($headElement->getPreviousSibling());
+        
+        // テキストノードのテスト（Rustのtest_textと同等）
+        $htmlWithText = '<html><head></head><body>text</body></html>';
+        $parserWithText = new HtmlParser($htmlWithText);
+        
+        $windowWithText = $parserWithText->constructTree();
+        $documentWithText = $windowWithText->getDocument();
+        
+        // HTML要素からBODY要素を取得
+        $htmlElementWithText = $documentWithText->getFirstChild();
+        $this->assertNotNull($htmlElementWithText);
+        
+        $headElementWithText = $htmlElementWithText->getFirstChild();
+        $this->assertNotNull($headElementWithText);
+        
+        $bodyElementWithText = $headElementWithText->getNextSibling();
+        $this->assertNotNull($bodyElementWithText);
+        $this->assertEquals('body', $bodyElementWithText->getElementKind()?->value);
+        
+        // BODY要素の子ノードがテキストノードであることを確認
+        $textNode = $bodyElementWithText->getFirstChild();
+        $this->assertNotNull($textNode);
+        $this->assertEquals(NodeKind::Text, $textNode->getKind());
+        $this->assertEquals('text', $textNode->getTextContent());
+        
+        // テキストノードに兄弟ノードが存在しないことを確認
+        $this->assertNull($textNode->getNextSibling());
+        $this->assertNull($textNode->getPreviousSibling());
+    }
 }
