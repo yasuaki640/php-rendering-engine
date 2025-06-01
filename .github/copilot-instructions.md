@@ -44,12 +44,14 @@ php-rendering-engine/
 - composer.jsonに定義されたコマンドを使用してフォーマットを実行
 - フォーマット実行: `php composer.phar run cs-fix`
 - フォーマットチェック: `php composer.phar run cs-check`
-- PHP 8.4環境では環境変数 `PHP_CS_FIXER_IGNORE_ENV=1` が自動で設定される
+- PHP 8.4環境では環境変数 `PHP_CS_FIXER_IGNORE_ENV=1` を設定しないと動かない
 
 ### テスト
 - PHPUnitを使用
 - 各パッケージにテストディレクトリが存在
 - テスト実行: `./vendor/bin/phpunit`
+- `-v` と `--verbose` オプションの使用は禁止
+- 警告は無視するが、ユーザーに警告の内容は説明すること
 
 #### テストの出力が見えない場合の対処法
 テストの詳細な出力や警告が表示されない場合は、標準エラー出力に出力されている場合がある。
