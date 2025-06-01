@@ -506,6 +506,7 @@ class HtmlParser
         if ($lastChild && $lastChild->getKind() === NodeKind::Text) {
             $currentText = $lastChild->getTextContent() ?? '';
             $lastChild->setTextContent($currentText . $char);
+
             return;
         }
 
