@@ -316,8 +316,16 @@ class HtmlParser
             case $token instanceof StartTag:
                 $tagName = $token->getTag();
 
-                // void要素（自己終了タグ）のチェック
-                if (in_array($tagName, ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'])) {
+                // p要素の特別な処理
+                if ($tagName === 'p') {
+                    $element = $this->createElement($token);
+                    $this->insertElement($element);
+                } elseif (in_array($tagName, ['h1', 'h2', 'a'])) {
+                    // h1, h2, a要素の処理
+                    $element = $this->createElement($token);
+                    $this->insertElement($element);
+                } elseif (in_array($tagName, ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'])) {
+                    // void要素（自己終了タグ）のチェック
                     $element = $this->createElement($token);
                     $this->insertElement($element);
                     $this->popCurrentNode(); // void要素はすぐにポップ
@@ -345,6 +353,9 @@ class HtmlParser
                         $this->mode = InsertionMode::AfterBody;
                         $this->handleAfterBodyMode($token);
                     }
+                } elseif (in_array($tagName, ['p', 'h1', 'h2', 'a'])) {
+                    // p, h1, h2, a要素の終了タグの処理
+                    $this->popUntil($tagName);
                 } else {
                     // 対応する開始タグまでポップ
                     $this->popUntil($tagName);
