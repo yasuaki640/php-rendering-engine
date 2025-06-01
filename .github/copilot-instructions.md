@@ -40,10 +40,24 @@ php-rendering-engine/
 - PSR-4オートローディング規約に従う
 - 各パッケージは独立したnamespaceを持つ
 
+### コードフォーマット
+- composer.jsonに定義されたコマンドを使用してフォーマットを実行
+- フォーマット実行: `php composer.phar run cs-fix`
+- フォーマットチェック: `php composer.phar run cs-check`
+- PHP 8.4環境では環境変数 `PHP_CS_FIXER_IGNORE_ENV=1` が自動で設定される
+
 ### テスト
 - PHPUnitを使用
 - 各パッケージにテストディレクトリが存在
 - テスト実行: `./vendor/bin/phpunit`
+
+#### テストの出力が見えない場合の対処法
+テストの詳細な出力や警告が表示されない場合は、以下のオプションを使用：
+- 詳細出力: `./vendor/bin/phpunit --verbose`
+- より詳細な出力: `./vendor/bin/phpunit --debug`
+- 警告も表示: `./vendor/bin/phpunit --display-warnings`
+- 非推奨警告も表示: `./vendor/bin/phpunit --display-deprecations`
+- 全ての出力: `./vendor/bin/phpunit --verbose --display-warnings --display-deprecations`
 
 ### ファイル命名規約
 - クラス名はPascalCase
@@ -53,17 +67,29 @@ php-rendering-engine/
 ## 開発時の注意点
 1. 新しいクラスを作成する際は、適切なnamespaceを設定する
 2. 依存関係を追加する際は、該当パッケージの`composer.json`を更新する
-3. コードを書いた後は必ずPHP-CS-Fixerでフォーマットする
+3. コードを書いた後は必ずPHP-CS-Fixerでフォーマットする（`php composer.phar run cs-fix`）
 4. 新機能には対応するテストを作成する
 
 ## よく使用するコマンド
 ```bash
-# コードフォーマット実行
-./vendor/bin/php-cs-fixer fix
+# コードフォーマット実行（推奨）
+php composer.phar run cs-fix
 
-# テスト実行
+# コードフォーマットチェック（実際の変更は行わない）
+php composer.phar run cs-check
+
+# テスト実行（基本）
 ./vendor/bin/phpunit
+
+# テスト実行（詳細出力）
+./vendor/bin/phpunit --verbose --display-warnings --display-deprecations
 
 # 依存関係インストール
 php composer.phar install
+
+# 依存関係更新
+php composer.phar update
+
+# オートロード再生成
+php composer.phar dump-autoload
 ```
