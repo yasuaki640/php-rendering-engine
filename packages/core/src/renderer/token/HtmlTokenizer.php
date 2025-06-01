@@ -34,7 +34,7 @@ class HtmlTokenizer
                     if ($c === '<') {
                         $this->state = State::TagOpen;
 
-                        continue;
+                        continue 2;
                     }
 
                     if ($this->isEof()) {
@@ -46,7 +46,7 @@ class HtmlTokenizer
                     if ($c === '/') {
                         $this->state = State::EndTagOpen;
 
-                        continue;
+                        continue 2;
                     }
 
                     if (ctype_alpha($c)) {
@@ -54,7 +54,7 @@ class HtmlTokenizer
                         $this->state = State::TagName;
                         $this->createTag(true);
 
-                        continue;
+                        continue 2;
                     }
 
                     if ($this->isEof()) {
@@ -64,7 +64,7 @@ class HtmlTokenizer
                     $this->reconsume = true;
                     $this->state = State::Data;
 
-                    continue;
+                    continue 2;
                 case State::EndTagOpen:
                     if ($this->isEof()) {
                         return HtmlTokenFactory::createEof();
@@ -75,21 +75,22 @@ class HtmlTokenizer
                         $this->state = State::TagName;
                         $this->createTag(false);
 
-                        continue;
+                        continue 2;
                     }
 
+                    // 無効な文字の場合、次の文字の処理に進む
                     break;
                 case State::TagName:
                     if ($c === ' ') {
                         $this->state = State::BeforeAttributeName;
 
-                        continue;
+                        continue 2;
                     }
 
                     if ($c === '/') {
                         $this->state = State::SelfClosingStartTag;
 
-                        continue;
+                        continue 2;
                     }
 
                     if ($c === '>') {
@@ -101,7 +102,7 @@ class HtmlTokenizer
                     if (ctype_upper($c)) {
                         $this->appendTagName(strtolower($c));
 
-                        continue;
+                        continue 2;
                     }
 
                     if ($this->isEof()) {
@@ -110,59 +111,59 @@ class HtmlTokenizer
 
                     $this->appendTagName($c);
 
-                    continue;
+                    continue 2;
                 case State::BeforeAttributeName:
                     if ($c === '/' || $c === '>' || $this->isEof()) {
                         $this->reconsume = true;
                         $this->state = State::AfterAttributeName;
 
-                        continue;
+                        continue 2;
                     }
 
                     $this->reconsume = true;
                     $this->state = State::AttributeName;
                     $this->startNewAttribute();
 
-                    continue;
+                    continue 2;
                 case State::AttributeName:
                     if ($c === ' ' || $c === '/' || $c === '>' || $this->isEof()) {
                         $this->reconsume = true;
                         $this->state = State::AfterAttributeName;
 
-                        continue;
+                        continue 2;
                     }
 
                     if ($c === '=') {
                         $this->state = State::BeforeAttributeValue;
 
-                        continue;
+                        continue 2;
                     }
 
                     if (ctype_upper($c)) {
                         $this->appendAttribute(strtolower($c), true);
 
-                        continue;
+                        continue 2;
                     }
 
                     $this->appendAttribute($c, true);
 
-                    continue;
+                    continue 2;
                 case State::AfterAttributeName:
                     if ($c === ' ') {
                         // 空白文字は無視する
-                        continue;
+                        continue 2;
                     }
 
                     if ($c === '/') {
                         $this->state = State::SelfClosingStartTag;
 
-                        continue;
+                        continue 2;
                     }
 
                     if ($c === '=') {
                         $this->state = State::BeforeAttributeValue;
 
-                        continue;
+                        continue 2;
                     }
 
                     if ($c === '>') {
@@ -178,34 +179,34 @@ class HtmlTokenizer
                     $this->reconsume = true;
                     $this->state = State::BeforeAttributeName;
 
-                    continue;
+                    continue 2;
                 case State::BeforeAttributeValue:
                     if ($c === ' ') {
                         // 空白文字は無視する
-                        continue;
+                        continue 2;
                     }
 
                     if ($c === '"') {
                         $this->state = State::AttributeValueDoubleQuoted;
 
-                        continue;
+                        continue 2;
                     }
 
                     if ($c === "'") {
                         $this->state = State::AttributeValueSingleQuoted;
 
-                        continue;
+                        continue 2;
                     }
 
                     $this->reconsume = true;
                     $this->state = State::AttributeValueUnquoted;
 
-                    continue;
+                    continue 2;
                 case State::AttributeValueDoubleQuoted:
                     if ($c === '"') {
                         $this->state = State::AfterAttributeValueQuoted;
 
-                        continue;
+                        continue 2;
                     }
 
                     if ($this->isEof()) {
@@ -214,12 +215,12 @@ class HtmlTokenizer
 
                     $this->appendAttribute($c, false);
 
-                    continue;
+                    continue 2;
                 case State::AttributeValueSingleQuoted:
                     if ($c === "'") {
                         $this->state = State::AfterAttributeValueQuoted;
 
-                        continue;
+                        continue 2;
                     }
 
                     if ($this->isEof()) {
@@ -228,12 +229,12 @@ class HtmlTokenizer
 
                     $this->appendAttribute($c, false);
 
-                    continue;
+                    continue 2;
                 case State::AttributeValueUnquoted:
                     if ($c === ' ') {
                         $this->state = State::BeforeAttributeName;
 
-                        continue;
+                        continue 2;
                     }
 
                     if ($c === '>') {
@@ -248,18 +249,18 @@ class HtmlTokenizer
 
                     $this->appendAttribute($c, false);
 
-                    continue;
+                    continue 2;
                 case State::AfterAttributeValueQuoted:
                     if ($c === ' ') {
                         $this->state = State::BeforeAttributeName;
 
-                        continue;
+                        continue 2;
                     }
 
                     if ($c === '/') {
                         $this->state = State::SelfClosingStartTag;
 
-                        continue;
+                        continue 2;
                     }
 
                     if ($c === '>') {
@@ -275,7 +276,7 @@ class HtmlTokenizer
                     $this->reconsume = true;
                     $this->state = State::BeforeAttributeName;
 
-                    continue;
+                    continue 2;
                 case State::SelfClosingStartTag:
                     if ($c === '>') {
                         $this->setSelfClosingFlag();
@@ -289,12 +290,12 @@ class HtmlTokenizer
                         return HtmlTokenFactory::createEof();
                     }
 
-                    continue;
+                    continue 2;
                 case State::ScriptData:
                     if ($c === '<') {
                         $this->state = State::ScriptDataLessThanSign;
 
-                        continue;
+                        continue 2;
                     }
 
                     if ($this->isEof()) {
@@ -308,7 +309,7 @@ class HtmlTokenizer
                         $this->buf = '';
                         $this->state = State::ScriptDataEndTagOpen;
 
-                        continue;
+                        continue 2;
                     }
 
                     $this->reconsume = true;
@@ -321,7 +322,7 @@ class HtmlTokenizer
                         $this->state = State::ScriptDataEndTagName;
                         $this->createTag(false);
 
-                        continue;
+                        continue 2;
                     }
 
                     $this->reconsume = true;
@@ -341,21 +342,21 @@ class HtmlTokenizer
                         $this->buf .= $c;
                         $this->appendTagName(strtolower($c));
 
-                        continue;
+                        continue 2;
                     }
 
                     $this->state = State::TemporaryBuffer;
                     $this->buf = '</' . $this->buf;
                     $this->buf .= $c;
 
-                    continue;
+                    continue 2;
                 case State::TemporaryBuffer:
                     $this->reconsume = true;
 
                     if (strlen($this->buf) === 0) {
                         $this->state = State::ScriptData;
 
-                        continue;
+                        continue 2;
                     }
 
                     // remove the first char

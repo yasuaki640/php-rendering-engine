@@ -162,36 +162,6 @@ HTML;
             echo "Stack trace:\n";
             echo $e->getTraceAsString() . "\n\n";
         }
-
-        echo "\n--- Testing with simple HTML ---\n";
-
-        // 新しいページでシンプルなHTMLをテスト
-        $newPage = $browser->addPage();
-        $browser->setActivePageIndex(1);
-        $currentPage = $browser->getCurrentPage();
-
-        $simpleHtmlContent = '<html><head><title>Simple Test</title></head><body><h1>Hello, World!</h1><p>This is a simple test page.</p></body></html>';
-        $simpleRawResponse = "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" . $simpleHtmlContent;
-
-        try {
-            $response = new HttpResponse($simpleRawResponse);
-            $currentPage->receiveResponse($response);
-
-            echo "Simple page loaded: " . ($currentPage->isLoaded() ? 'Yes' : 'No') . "\n";
-
-            if ($currentPage->isLoaded()) {
-                $frame = $currentPage->getFrame();
-                $document = $frame->getDocument();
-                echo "\n--- Simple DOM Tree Structure ---\n";
-                $domTreeString = DomUtils::convertDomToString($document);
-                echo $domTreeString;
-                echo "--- End of Simple DOM Tree ---\n";
-            }
-        } catch (\Exception $e) {
-            echo "Error processing simple HTML: " . $e->getMessage() . "\n";
-        }
-
-        echo "\nBrowser and Page test completed successfully!\n";
     }
 
     /**
