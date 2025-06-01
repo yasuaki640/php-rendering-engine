@@ -57,7 +57,7 @@ class ElementKindTest extends TestCase
     {
         $allKinds = ElementKind::cases();
 
-        $this->assertCount(10, $allKinds);
+        $this->assertCount(23, $allKinds);
         $this->assertContains(ElementKind::Html, $allKinds);
         $this->assertContains(ElementKind::Head, $allKinds);
         $this->assertContains(ElementKind::Style, $allKinds);

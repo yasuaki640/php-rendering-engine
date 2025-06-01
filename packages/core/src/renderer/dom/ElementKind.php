@@ -46,11 +46,60 @@ enum ElementKind: string
      */
     case H1 = 'h1';
     case H2 = 'h2';
+    case H3 = 'h3';
+    case H4 = 'h4';
+    case H5 = 'h5';
+    case H6 = 'h6';
+
+    /**
+     * @see https://html.spec.whatwg.org/multipage/semantics.html#the-title-element
+     */
+    case Title = 'title';
+
+    /**
+     * @see https://html.spec.whatwg.org/multipage/semantics.html#the-meta-element
+     */
+    case Meta = 'meta';
+
+    /**
+     * @see https://html.spec.whatwg.org/multipage/semantics.html#the-link-element
+     */
+    case Link = 'link';
+
+    /**
+     * @see https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-span-element
+     */
+    case Span = 'span';
 
     /**
      * @see https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-a-element
      */
     case A = 'a';
+
+    /**
+     * @see https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element
+     */
+    case Img = 'img';
+
+    /**
+     * @see https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-br-element
+     */
+    case Br = 'br';
+
+    /**
+     * @see https://html.spec.whatwg.org/multipage/grouping-content.html#the-ul-element
+     */
+    case Ul = 'ul';
+
+    /**
+     * @see https://html.spec.whatwg.org/multipage/grouping-content.html#the-ol-element
+     */
+    case Ol = 'ol';
+
+    /**
+     * @see https://html.spec.whatwg.org/multipage/grouping-content.html#the-li-element
+     */
+    case Li = 'li';
 
     /**
      * @see https://html.spec.whatwg.org/multipage/grouping-content.html#the-div-element
@@ -71,7 +120,20 @@ enum ElementKind: string
             'p' => self::P,
             'h1' => self::H1,
             'h2' => self::H2,
+            'h3' => self::H3,
+            'h4' => self::H4,
+            'h5' => self::H5,
+            'h6' => self::H6,
+            'title' => self::Title,
+            'meta' => self::Meta,
+            'link' => self::Link,
+            'span' => self::Span,
             'a' => self::A,
+            'img' => self::Img,
+            'br' => self::Br,
+            'ul' => self::Ul,
+            'ol' => self::Ol,
+            'li' => self::Li,
             'div' => self::Div,
             default => throw new \InvalidArgumentException("Unimplemented element name: {$tagName}"),
         };
