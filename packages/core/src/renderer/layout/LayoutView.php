@@ -7,6 +7,7 @@ namespace MyApp\Core\Renderer\Layout;
 use MyApp\Core\Renderer\Css\CssParser;
 use MyApp\Core\Renderer\Css\CssTokenizer;
 use MyApp\Core\Renderer\Dom\Api;
+use MyApp\Core\Renderer\Dom\ElementKind;
 use MyApp\Core\Renderer\Html\HtmlParser;
 
 class LayoutView
@@ -17,7 +18,7 @@ class LayoutView
     {
         // レイアウトツリーは描画される要素だけを持つツリーなので、<body>タグを取得し、その子要素以下を
         // レイアウトツリーのノードに変換する。
-        $bodyRoot = $this->getTargetElementNode($root, 'body');
+        $bodyRoot = Api::getTargetElementNode($root, ElementKind::Body);
 
         $this->root = $this->buildLayoutTree($bodyRoot, null, $cssom);
         $this->updateLayout();
@@ -222,17 +223,5 @@ class LayoutView
         $cssom = (new CssParser($cssTokenizer))->parseStylesheet();
 
         return new self($dom, $cssom);
-    }
-
-    private function getTargetElementNode(?object $root, string $elementKind): ?object
-    {
-        // 実際の実装は DOMのAPIに依存するため、ここでは簡略化
-        // get_target_element_node関数の代替
-        if ($root === null) {
-            return null;
-        }
-
-        // 実際の実装では、DOMツリーを辿ってbody要素を見つける処理が必要
-        return $root;
     }
 }
