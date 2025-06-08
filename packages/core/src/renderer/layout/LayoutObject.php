@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace MyApp\Core\Renderer\Layout;
 
+use MyApp\Core\Renderer\Css\Selector;
+use MyApp\Core\Renderer\Css\SelectorType;
+use MyApp\Core\Renderer\Dom\Element;
 use MyApp\Core\Renderer\Dom\Node;
 use MyApp\Core\Renderer\Dom\NodeKind;
 
@@ -202,16 +205,43 @@ class LayoutObject
         $this->point = $point;
     }
 
-    public function isNodeSelected(object $selector): bool
+    public function isNodeSelected(Selector $selector): bool
     {
         $nodeKind = $this->getNodeKind();
 
-        if (! is_object($nodeKind)) {
-            return false;
+        // ノードがElement型の場合のみ処理を行う
+        if ($nodeKind instanceof Element) {
+            switch ($selector->type) {
+                case SelectorType::TypeSelector:
+                    // タグ名でマッチング（例：div, p, h1）
+                    return $nodeKind->getKind()->value === $selector->value;
+
+                case SelectorType::ClassSelector:
+                    // class属性でマッチング（例：.class-name）
+                    foreach ($nodeKind->getAttributes() as $attribute) {
+                        if ($attribute->name === 'class' && $attribute->value === $selector->value) {
+                            return true;
+                        }
+                    }
+                    return false;
+
+                case SelectorType::IdSelector:
+                    // id属性でマッチング（例：#id-name）
+                    foreach ($nodeKind->getAttributes() as $attribute) {
+                        if ($attribute->name === 'id' && $attribute->value === $selector->value) {
+                            return true;
+                        }
+                    }
+                    return false;
+
+                case SelectorType::UnknownSelector:
+                    return false;
+
+                default:
+                    return false;
+            }
         }
 
-        // セレクタの種類に応じた処理（実際の実装はCSSセレクタに依存）
-        // ここでは簡略化
         return false;
     }
 
