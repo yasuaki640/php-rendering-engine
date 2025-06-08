@@ -32,7 +32,7 @@ class Declaration
 
     public function equals(Declaration $other): bool
     {
-        return $this->property === $other->property && 
+        return $this->property === $other->property &&
                $this->value->equals($other->value);
     }
 }

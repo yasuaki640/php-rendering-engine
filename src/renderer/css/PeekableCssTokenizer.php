@@ -42,6 +42,7 @@ class PeekableCssTokenizer
         if ($token !== null) {
             $this->position++;
         }
+
         return $token;
     }
 }

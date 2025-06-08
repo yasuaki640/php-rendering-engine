@@ -39,9 +39,17 @@ class QualifiedRule
         $this->declarations = $declarations;
     }
 
+    /**
+     * @return array<Declaration>
+     */
+    public function getDeclarations(): array
+    {
+        return $this->declarations;
+    }
+
     public function equals(QualifiedRule $other): bool
     {
-        if (!$this->selector->equals($other->selector)) {
+        if (! $this->selector->equals($other->selector)) {
             return false;
         }
 
@@ -50,7 +58,7 @@ class QualifiedRule
         }
 
         for ($i = 0; $i < count($this->declarations); $i++) {
-            if (!$this->declarations[$i]->equals($other->declarations[$i])) {
+            if (! $this->declarations[$i]->equals($other->declarations[$i])) {
                 return false;
             }
         }
