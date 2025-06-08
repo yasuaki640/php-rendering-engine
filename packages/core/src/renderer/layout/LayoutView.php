@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace MyApp\Core\Renderer\Layout;
 
+use MyApp\Core\Renderer\Css\CssParser;
+use MyApp\Core\Renderer\Css\CssTokenizer;
+use MyApp\Core\Renderer\Dom\Api;
+use MyApp\Core\Renderer\Html\HtmlParser;
+
 class LayoutView
 {
     private ?LayoutObject $root;
@@ -201,6 +206,22 @@ class LayoutView
     public function getRoot(): ?LayoutObject
     {
         return $this->root;
+    }
+
+    /**
+     * HTMLからLayoutViewを作成するファクトリーメソッド
+     * Rustのcreate_layout_view関数に相当
+     */
+    public static function createLayoutView(string $html): self
+    {
+        $htmlParser = new HtmlParser($html);
+        $window = $htmlParser->constructTree();
+        $dom = $window->getDocument();
+        $style = Api::getStyleContent($dom);
+        $cssTokenizer = new CssTokenizer($style);
+        $cssom = (new CssParser($cssTokenizer))->parseStylesheet();
+
+        return new self($dom, $cssom);
     }
 
     private function getTargetElementNode(?object $root, string $elementKind): ?object
