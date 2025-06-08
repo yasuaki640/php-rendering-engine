@@ -26,10 +26,16 @@ class Api
             return null;
         }
 
-        // 現在のノードが目的の要素種別かチェック
-        if ($node->getKind() === NodeKind::Element &&
-            $node->getElementKind() === $elementKind) {
-            return $node;
+        // Rustの実装に合わせた比較：NodeKind::Element(Element::new(&element_kind.to_string(), Vec::new()))
+        // 現在のノードがElement型で、かつ指定されたElementKindと一致するかチェック
+        if ($node->getKind() === NodeKind::Element) {
+            // 新しいElementを作成して比較（Rustのロジックと同等）
+            $targetElement = new Element($elementKind->value, []);
+            $currentElement = $node->getElement();
+            
+            if ($currentElement !== null && $currentElement->getKind() === $targetElement->getKind()) {
+                return $node;
+            }
         }
 
         // 子ノードを再帰的に検索
