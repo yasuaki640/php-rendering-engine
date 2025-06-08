@@ -250,16 +250,17 @@ class LayoutObject
     public function cascadingStyle(array $declarations): void
     {
         foreach ($declarations as $declaration) {
-            $property = $declaration['property'] ?? '';
-            $value = $declaration['value'] ?? '';
+            $property = $declaration->property ?? '';
+            $value = $declaration->value ?? null;
 
             switch ($property) {
                 case 'background-color':
                     try {
-                        if (str_starts_with($value, '#')) {
-                            $color = Color::fromCode($value);
+                        $valueStr = $value ? $value->value : '';
+                        if (str_starts_with($valueStr, '#')) {
+                            $color = Color::fromCode($valueStr);
                         } else {
-                            $color = Color::fromName($value);
+                            $color = Color::fromName($valueStr);
                         }
                         $this->style->setBackgroundColor($color);
                     } catch (\Exception $e) {
@@ -271,10 +272,11 @@ class LayoutObject
 
                 case 'color':
                     try {
-                        if (str_starts_with($value, '#')) {
-                            $color = Color::fromCode($value);
+                        $valueStr = $value ? $value->value : '';
+                        if (str_starts_with($valueStr, '#')) {
+                            $color = Color::fromCode($valueStr);
                         } else {
-                            $color = Color::fromName($value);
+                            $color = Color::fromName($valueStr);
                         }
                         $this->style->setColor($color);
                     } catch (\Exception $e) {
@@ -286,7 +288,8 @@ class LayoutObject
 
                 case 'display':
                     try {
-                        $displayType = DisplayType::fromString($value);
+                        $valueStr = $value ? $value->value : '';
+                        $displayType = DisplayType::fromString($valueStr);
                         $this->style->setDisplay($displayType);
                     } catch (\Exception $e) {
                         $this->style->setDisplay(DisplayType::DisplayNone);

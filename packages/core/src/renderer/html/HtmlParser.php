@@ -229,12 +229,12 @@ class HtmlParser
                     $element = $this->createElement($token);
                     $this->insertElement($element);
 
-                    if ($tagName === 'script') {
+                    if (in_array($tagName, ['script', 'style'])) {
                         $this->originalInsertionMode = $this->mode;
                         $this->mode = InsertionMode::Text;
                     }
 
-                    if (! $token->isSelfClosing() && $tagName !== 'script') {
+                    if (! $token->isSelfClosing() && ! in_array($tagName, ['script', 'style'])) {
                         $this->popCurrentNode();
                     }
                 } else {
@@ -398,7 +398,8 @@ class HtmlParser
                 break;
 
             case $token instanceof EndTag:
-                if ($token->getTag() === 'script') {
+                $tagName = $token->getTag();
+                if (in_array($tagName, ['script', 'style'])) {
                     $this->popCurrentNode();
                     $this->mode = $this->originalInsertionMode;
                 }
