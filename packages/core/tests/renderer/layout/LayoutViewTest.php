@@ -12,9 +12,17 @@ use PHPUnit\Framework\TestCase;
 
 class LayoutViewTest extends TestCase
 {
+    /**
+     * HTMLからLayoutViewを作成するファクトリーメソッド
+     * Rustのcreate_layout_view関数に相当
+     */
+    private static function createLayoutView(string $html): LayoutView
+    {
+        return LayoutView::createLayoutView($html);
+    }
     public function testEmpty(): void
     {
-        $layoutView = LayoutView::createLayoutView("");
+        $layoutView = self::createLayoutView("");
 
         $root = $layoutView->getRoot();
         $this->assertNull($root);
@@ -23,7 +31,7 @@ class LayoutViewTest extends TestCase
     public function testBody(): void
     {
         $html = "<html><head></head><body></body></html>";
-        $layoutView = LayoutView::createLayoutView($html);
+        $layoutView = self::createLayoutView($html);
 
         $root = $layoutView->getRoot();
         $this->assertNotNull($root);
@@ -38,7 +46,7 @@ class LayoutViewTest extends TestCase
     public function testText(): void
     {
         $html = "<html><head></head><body>text</body></html>";
-        $layoutView = LayoutView::createLayoutView($html);
+        $layoutView = self::createLayoutView($html);
 
         $root = $layoutView->getRoot();
         $this->assertNotNull($root);
@@ -61,7 +69,7 @@ class LayoutViewTest extends TestCase
     public function testDisplayNone(): void
     {
         $html = "<html><head><style>body{display:none;}</style></head><body>text</body></html>";
-        $layoutView = LayoutView::createLayoutView($html);
+        $layoutView = self::createLayoutView($html);
 
         $this->assertNull($layoutView->getRoot());
     }
@@ -84,7 +92,7 @@ class LayoutViewTest extends TestCase
 </body>
 </html>
 HTML;
-        $layoutView = LayoutView::createLayoutView($html);
+        $layoutView = self::createLayoutView($html);
 
         $root = $layoutView->getRoot();
         $this->assertNotNull($root);
