@@ -67,4 +67,18 @@ class Element
     {
         $this->attributes[] = $attribute;
     }
+
+    /**
+     * ブロック要素かどうかを判定
+     */
+    public function isBlockElement(): bool
+    {
+        return match ($this->kind) {
+            ElementKind::Body,
+            ElementKind::H1,
+            ElementKind::H2,
+            ElementKind::P => true,
+            default => false,
+        };
+    }
 }

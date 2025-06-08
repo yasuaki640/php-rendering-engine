@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace MyApp\Core\Tests\Renderer\Css;
 
-use PHPUnit\Framework\TestCase;
 use MyApp\Core\Renderer\Css\CssToken;
 use MyApp\Core\Renderer\Css\CssTokenizer;
 use MyApp\Core\Renderer\Css\CssTokenType;
+use PHPUnit\Framework\TestCase;
 
 class CssTokenizerTest extends TestCase
 {
