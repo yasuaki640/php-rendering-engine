@@ -9,7 +9,7 @@ namespace Yasuaki640\PhpRenderingEngine\Renderer\Css;
  * Equivalent to Rust's CssToken enum
  * @see https://www.w3.org/TR/css-syntax-3/
  */
-readonly class CssToken
+class CssToken
 {
     public function __construct(
         public CssTokenType $type,
