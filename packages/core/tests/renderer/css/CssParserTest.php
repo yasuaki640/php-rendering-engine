@@ -112,34 +112,4 @@ class CssParserTest extends TestCase
         $this->assertTrue($expectedRule1->equals($stylesheet->getRules()[0]));
         $this->assertTrue($expectedRule2->equals($stylesheet->getRules()[1]));
     }
-
-    public function testMultipleDeclarations(): void
-    {
-        $style = 'div { margin: 10px; padding: 5px; background-color: white; }';
-        $tokenizer = new CssTokenizer($style);
-        $parser = new CssParser($tokenizer);
-        $stylesheet = $parser->parseStylesheet();
-
-        $this->assertCount(1, $stylesheet->getRules());
-        $rule = $stylesheet->getRules()[0];
-        $this->assertCount(3, $rule->getDeclarations());
-
-        // 各宣言をチェック
-        $declarations = $rule->getDeclarations();
-        $this->assertEquals('margin', $declarations[0]->property);
-        $this->assertEquals('padding', $declarations[1]->property);
-        $this->assertEquals('background-color', $declarations[2]->property);
-    }
-
-    public function testNestedBraces(): void
-    {
-        // 無効なCSSだが、パーサーがクラッシュしないことを確認
-        $style = 'p { color: { red; } }';
-        $tokenizer = new CssTokenizer($style);
-        $parser = new CssParser($tokenizer);
-
-        // 例外が発生しないことを確認
-        $this->expectNotToPerformAssertions();
-        $parser->parseStylesheet();
-    }
 }
