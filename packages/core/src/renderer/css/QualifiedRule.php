@@ -47,6 +47,11 @@ class QualifiedRule
         return $this->declarations;
     }
 
+    public function getSelector(): Selector
+    {
+        return $this->selector;
+    }
+
     public function equals(QualifiedRule $other): bool
     {
         if (! $this->selector->equals($other->selector)) {
