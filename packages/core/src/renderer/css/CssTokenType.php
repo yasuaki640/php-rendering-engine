@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yasuaki640\PhpRenderingEngine\Renderer\Css;
+namespace MyApp\Core\Renderer\Css;
 
 /**
  * CSS Token Type enumeration

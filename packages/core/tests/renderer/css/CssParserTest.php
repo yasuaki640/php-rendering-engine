@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Yasuaki640\PhpRenderingEngine\Renderer\Css\Tests;
+namespace MyApp\Core\Tests\Renderer\Css;
 
 use PHPUnit\Framework\TestCase;
-use Yasuaki640\PhpRenderingEngine\Renderer\Css\CssParser;
-use Yasuaki640\PhpRenderingEngine\Renderer\Css\CssToken;
-use Yasuaki640\PhpRenderingEngine\Renderer\Css\CssTokenizer;
-use Yasuaki640\PhpRenderingEngine\Renderer\Css\CssTokenType;
-use Yasuaki640\PhpRenderingEngine\Renderer\Css\Declaration;
-use Yasuaki640\PhpRenderingEngine\Renderer\Css\QualifiedRule;
-use Yasuaki640\PhpRenderingEngine\Renderer\Css\Selector;
+use MyApp\Core\Renderer\Css\CssParser;
+use MyApp\Core\Renderer\Css\CssToken;
+use MyApp\Core\Renderer\Css\CssTokenizer;
+use MyApp\Core\Renderer\Css\CssTokenType;
+use MyApp\Core\Renderer\Css\Declaration;
+use MyApp\Core\Renderer\Css\QualifiedRule;
+use MyApp\Core\Renderer\Css\Selector;
 
 class CssParserTest extends TestCase
 {

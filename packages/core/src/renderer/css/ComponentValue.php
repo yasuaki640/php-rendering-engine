@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yasuaki640\PhpRenderingEngine\Renderer\Css;
+namespace MyApp\Core\Renderer\Css;
 
 /**
  * Component Value representation based on CSS Syntax Level 3 specification

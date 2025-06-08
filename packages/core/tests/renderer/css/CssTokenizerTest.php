@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Yasuaki640\PhpRenderingEngine\Tests\Renderer\Css;
+namespace MyApp\Core\Tests\Renderer\Css;
 
 use PHPUnit\Framework\TestCase;
-use Yasuaki640\PhpRenderingEngine\Renderer\Css\CssToken;
-use Yasuaki640\PhpRenderingEngine\Renderer\Css\CssTokenizer;
-use Yasuaki640\PhpRenderingEngine\Renderer\Css\CssTokenType;
+use MyApp\Core\Renderer\Css\CssToken;
+use MyApp\Core\Renderer\Css\CssTokenizer;
+use MyApp\Core\Renderer\Css\CssTokenType;
 
 class CssTokenizerTest extends TestCase
 {
