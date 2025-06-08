@@ -15,6 +15,7 @@ class Declaration
         public CssToken $value = new CssToken(CssTokenType::Ident, '')
     ) {}
 
+    // FIXME: PHPらしくコンストラクタを使ってnewを生成する方法に変更する
     public static function new(): self
     {
         return new self();
