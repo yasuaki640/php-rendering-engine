@@ -11,7 +11,7 @@ class Color
     private ?string $name;
     private string $code;
 
-    public function __construct(?string $name, string $code)
+    private function __construct(?string $name, string $code)
     {
         $this->name = $name;
         $this->code = $code;
