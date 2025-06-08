@@ -223,6 +223,7 @@ class LayoutObject
                             return true;
                         }
                     }
+
                     return false;
 
                 case SelectorType::IdSelector:
@@ -232,6 +233,7 @@ class LayoutObject
                             return true;
                         }
                     }
+
                     return false;
 
                 case SelectorType::UnknownSelector:
@@ -336,6 +338,15 @@ class LayoutObject
     public function getKind(): LayoutObjectKind
     {
         return $this->kind;
+    }
+
+    /**
+     * LayoutObjectの等価性を判定する（RustのPartialEq実装に対応）
+     * kindフィールドのみで比較を行う
+     */
+    public function equals(LayoutObject $other): bool
+    {
+        return $this->kind === $other->kind;
     }
 
     public function getNodeKind(): mixed
