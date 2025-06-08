@@ -191,7 +191,11 @@ class CssParser
             }
 
             if ($token->type === CssTokenType::OpenCurly) {
-                $this->t->next(); // consume the OpenCurly token
+                $nextToken = $this->t->next(); // consume the OpenCurly token
+                // Assert that the consumed token is indeed OpenCurly (equivalent to Rust's assert_eq!)
+                if ($nextToken === null || $nextToken->type !== CssTokenType::OpenCurly) {
+                    throw new \RuntimeException("Expected OpenCurly token but got different token");
+                }
                 $rule->setDeclarations($this->consumeListOfDeclarations());
 
                 return $rule;
