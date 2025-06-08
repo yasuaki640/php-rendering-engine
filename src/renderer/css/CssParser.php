@@ -237,17 +237,14 @@ class CssParser
     /**
      * Parse stylesheet
      * @see https://www.w3.org/TR/css-syntax-3/#parse-stylesheet
-     * @return array<string, mixed>
      */
-    public function parseStylesheet(): array
+    public function parseStylesheet(): StyleSheet
     {
-        // StyleSheet構造体のインスタンスを作成する（今回は配列で代用）
-        $sheet = [
-            'rules' => [],
-        ];
+        // StyleSheet構造体のインスタンスを作成する
+        $sheet = StyleSheet::new();
 
         // トークン列からルールのリストを作成し、StyleSheetのフィールドに設定する
-        $sheet['rules'] = $this->consumeListOfRules();
+        $sheet->setRules($this->consumeListOfRules());
 
         return $sheet;
     }
