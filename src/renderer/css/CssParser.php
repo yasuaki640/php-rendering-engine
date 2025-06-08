@@ -94,12 +94,20 @@ class CssParser
 
             switch ($token->type) {
                 case CssTokenType::CloseCurly:
-                    $this->t->next(); // consume the CloseCurly token
+                    $nextToken = $this->t->next(); // consume the CloseCurly token
+                    // Assert that the consumed token is indeed CloseCurly (equivalent to Rust's assert_eq!)
+                    if ($nextToken === null || $nextToken->type !== CssTokenType::CloseCurly) {
+                        throw new \RuntimeException("Expected CloseCurly token but got different token");
+                    }
 
                     return $declarations;
 
                 case CssTokenType::SemiColon:
-                    $this->t->next(); // consume the SemiColon token
+                    $nextToken = $this->t->next(); // consume the SemiColon token
+                    // Assert that the consumed token is indeed SemiColon (equivalent to Rust's assert_eq!)
+                    if ($nextToken === null || $nextToken->type !== CssTokenType::SemiColon) {
+                        throw new \RuntimeException("Expected SemiColon token but got different token");
+                    }
 
                     // 一つの宣言が終了。何もしない
                     break;
