@@ -210,7 +210,7 @@ class HtmlParser
                 if ($this->isSkippingTitle) {
                     return;
                 }
-                
+
                 // 空白文字は挿入
                 if (trim($token->getChar()) === '') {
                     $this->insertChar($token->getChar());
@@ -237,6 +237,7 @@ class HtmlParser
                 } elseif ($tagName === 'title') {
                     // <title>タグとその内容を完全に無視する（ch6に従う）
                     $this->isSkippingTitle = true;
+
                     return;
                 } else {
                     // その他の開始タグは head を終了してbodyモードに
@@ -251,6 +252,7 @@ class HtmlParser
                 if ($token->getTag() === 'title' && $this->isSkippingTitle) {
                     // title終了タグでスキップモードを終了
                     $this->isSkippingTitle = false;
+
                     return;
                 } elseif ($token->getTag() === 'head') {
                     $this->popCurrentNode();
@@ -417,7 +419,7 @@ class HtmlParser
                 break;
 
             case $token instanceof EofToken:
-                if (!empty($this->stackOfOpenElements)) {
+                if (! empty($this->stackOfOpenElements)) {
                     $this->popCurrentNode();
                 }
                 $this->mode = $this->originalInsertionMode;
@@ -429,6 +431,7 @@ class HtmlParser
                 if ($token instanceof StartTag) {
                     $this->insertChar('<' . $token->getTag() . '>');
                 }
+
                 break;
         }
     }

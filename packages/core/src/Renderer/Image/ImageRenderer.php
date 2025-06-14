@@ -149,21 +149,6 @@ class ImageRenderer
     {
         // アドレスバーを描画
         $this->drawAddressBar("http://localhost/test.html");
-
-        // DisplayItemsがある場合はデバッグ情報を出力
-        echo "Rendering " . count($displayItems) . " display items\n";
-
-        foreach ($displayItems as $i => $item) {
-            echo "Item $i: " . get_class($item) . "\n";
-            if ($item instanceof TextDisplayItem) {
-                echo "  Text: " . $item->getText() . "\n";
-                echo "  Position: (" . $item->getLayoutPoint()->getX() . ", " . $item->getLayoutPoint()->getY() . ")\n";
-            } elseif ($item instanceof RectDisplayItem) {
-                echo "  Rect size: " . $item->getLayoutSize()->getWidth() . "x" . $item->getLayoutSize()->getHeight() . "\n";
-                echo "  Position: (" . $item->getLayoutPoint()->getX() . ", " . $item->getLayoutPoint()->getY() . ")\n";
-            }
-        }
-
         $this->renderDisplayItems($displayItems);
     }
 

@@ -5,6 +5,7 @@ namespace Yasuaki640\PhpRenderingEngine;
 use Yasuaki640\PhpRenderingEngine\Core\Browser;
 use Yasuaki640\PhpRenderingEngine\Core\DomUtils;
 use Yasuaki640\PhpRenderingEngine\Core\Examples\BrowserExample;
+use Yasuaki640\PhpRenderingEngine\Core\Examples\RenderingDemo;
 use Yasuaki640\PhpRenderingEngine\Core\HttpResponse;
 use Yasuaki640\PhpRenderingEngine\Net\HttpClient;
 
@@ -22,12 +23,15 @@ class CLI
             $this->testBrowser();
         } elseif (count($args) > 1 && $args[1] === 'test-browser-example') {
             $this->runBrowserExample();
+        } elseif (count($args) > 1 && $args[1] === 'render-samples') {
+            $this->renderSamplePages();
         } else {
             echo "Available commands:\n";
             echo "  test-http           - Test HTTP client with httpbin.org\n";
             echo "  test-example        - Test HTTP client with example.com\n";
             echo "  test-browser        - Test Browser and Page classes (simple, based on ch5/main.rs)\n";
             echo "  test-browser-example - Run detailed BrowserExample class\n";
+            echo "  render-samples      - Render all sample HTML pages to images (ch6 app.rs equivalent)\n";
             echo "\nUsage: php bin/hello <command>\n";
         }
     }
@@ -210,6 +214,25 @@ HTML;
             echo "\n=== BrowserExample completed successfully ===\n";
         } catch (\Exception $e) {
             echo "Error running BrowserExample: " . $e->getMessage() . "\n";
+            echo "File: " . $e->getFile() . "\n";
+            echo "Line: " . $e->getLine() . "\n";
+            echo "Stack trace:\n" . $e->getTraceAsString() . "\n";
+        }
+    }
+
+    /**
+     * サンプルページを全て描画（ch6のapp.rs相当の処理）
+     */
+    private function renderSamplePages(): void
+    {
+        echo "=== Rendering Sample Pages (ch6 app.rs equivalent) ===\n\n";
+
+        try {
+            // RenderingDemoクラスのrenderAllSamplePages()を使用
+            RenderingDemo::renderAllSamplePages();
+            echo "\n=== All sample pages rendered successfully ===\n";
+        } catch (\Exception $e) {
+            echo "Error rendering sample pages: " . $e->getMessage() . "\n";
             echo "File: " . $e->getFile() . "\n";
             echo "Line: " . $e->getLine() . "\n";
             echo "Stack trace:\n" . $e->getTraceAsString() . "\n";
