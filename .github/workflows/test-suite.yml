@@ -26,16 +26,53 @@ jobs:
         coverage: xdebug
         tools: composer
 
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      run: |
+        echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+    - name: Cache Composer dependencies
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
+
     - name: Install main dependencies
       run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+    - name: Cache core package Composer dependencies
+      uses: actions/cache@v3
+      with:
+        path: packages/core/vendor
+        key: ${{ runner.os }}-core-composer-${{ hashFiles('packages/core/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-core-composer-
 
     - name: Install core package dependencies
       working-directory: packages/core
       run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
+    - name: Cache net package Composer dependencies
+      uses: actions/cache@v3
+      with:
+        path: packages/net/vendor
+        key: ${{ runner.os }}-net-composer-${{ hashFiles('packages/net/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-net-composer-
+
     - name: Install net package dependencies
       working-directory: packages/net
       run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+    - name: Cache uri-parser package Composer dependencies
+      uses: actions/cache@v3
+      with:
+        path: packages/uri-parser/vendor
+        key: ${{ runner.os }}-uri-parser-composer-${{ hashFiles('packages/uri-parser/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-uri-parser-composer-
 
     - name: Install uri-parser package dependencies
       working-directory: packages/uri-parser
@@ -69,6 +106,19 @@ jobs:
         php-version: 8.4
         extensions: mbstring, xml, ctype, json, intl
         tools: composer
+
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      run: |
+        echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+    - name: Cache Composer dependencies
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
 
     - name: Install dependencies
       run: composer install --no-interaction --prefer-dist --optimize-autoloader
