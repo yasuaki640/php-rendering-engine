@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MyApp\Core\Renderer\Dom;
 
-use MyApp\Core\Renderer\Token\Attribute;
+use MyApp\Core\Renderer\Html\Attribute;
 
 /**
  * DOM Element

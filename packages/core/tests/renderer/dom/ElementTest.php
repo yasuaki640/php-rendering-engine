@@ -6,7 +6,7 @@ namespace MyApp\Core\Renderer\Tests\Dom;
 
 use MyApp\Core\Renderer\Dom\Element;
 use MyApp\Core\Renderer\Dom\ElementKind;
-use MyApp\Core\Renderer\Token\Attribute;
+use MyApp\Core\Renderer\Html\Attribute;
 use PHPUnit\Framework\TestCase;
 
 class ElementTest extends TestCase

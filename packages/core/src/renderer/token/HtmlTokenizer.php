@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MyApp\Core\Renderer\Token;
 
+use MyApp\Core\Renderer\Html\Attribute;
+
 class HtmlTokenizer
 {
     private string $input;
