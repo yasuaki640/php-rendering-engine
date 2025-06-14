@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout;
 
+use Yasuaki640\PhpRenderingEngine\Core\DisplayItem;
 use Yasuaki640\PhpRenderingEngine\Core\Renderer\Css\Selector;
 use Yasuaki640\PhpRenderingEngine\Core\Renderer\Css\SelectorType;
 use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\Element;

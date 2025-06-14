@@ -14,10 +14,11 @@ class Constants
     public const WINDOW_HEIGHT = 400;
     public const WINDOW_PADDING = 5;
 
-    // noliライブラリに定義されている定数
     public const TITLE_BAR_HEIGHT = 24;
 
     public const TOOLBAR_HEIGHT = 26;
+
+    public const ADDRESSBAR_HEIGHT = 20;
 
     public const CONTENT_AREA_WIDTH = self::WINDOW_WIDTH - (self::WINDOW_PADDING * 2);
     public const CONTENT_AREA_HEIGHT = self::WINDOW_HEIGHT - self::TITLE_BAR_HEIGHT - self::TOOLBAR_HEIGHT - (self::WINDOW_PADDING * 2);
