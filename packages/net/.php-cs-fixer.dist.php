@@ -12,6 +12,8 @@ $finder = PhpCsFixer\Finder::create()
 
 $config = new PhpCsFixer\Config();
 return $config->setRules([
+    '@PER-CS2.0' => true,
+    '@PER-CS1.0' => true,
     '@PSR12' => true,
     'array_syntax' => ['syntax' => 'short'],
     'ordered_imports' => ['sort_algorithm' => 'alpha'],

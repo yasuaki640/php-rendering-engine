@@ -8,9 +8,7 @@ use Yasuaki640\PhpRenderingEngine\Core\HttpResponse;
 
 class HttpClient
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     // TODO: implement a proper HTTP client
     public function get(string $host, int $port, string $path): HttpResponse
