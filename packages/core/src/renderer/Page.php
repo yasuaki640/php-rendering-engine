@@ -6,8 +6,14 @@ namespace MyApp\Core\Renderer;
 
 use MyApp\Core\Browser;
 use MyApp\Core\HttpResponse;
+use MyApp\Core\Renderer\Css\CssParser;
+use MyApp\Core\Renderer\Css\CssTokenizer;
+use MyApp\Core\Renderer\Css\StyleSheet;
+use MyApp\Core\Renderer\Dom\Api;
 use MyApp\Core\Renderer\Dom\Window;
 use MyApp\Core\Renderer\Html\HtmlParser;
+use MyApp\Core\Renderer\Layout\DisplayItem;
+use MyApp\Core\Renderer\Layout\LayoutView;
 
 /**
  * ページクラス
@@ -18,6 +24,10 @@ class Page
 {
     private ?\WeakReference $browser = null;
     private ?Window $frame = null;
+    private ?StyleSheet $style = null;
+    private ?LayoutView $layoutView = null;
+    /** @var DisplayItem[] */
+    private array $displayItems = [];
 
     public function __construct()
     {
@@ -46,6 +56,8 @@ class Page
     public function receiveResponse(HttpResponse $response): void
     {
         $this->createFrame($response->body);
+        $this->setLayoutView();
+        $this->paintTree();
     }
 
     /**
@@ -55,6 +67,13 @@ class Page
     {
         $parser = new HtmlParser($html);
         $this->frame = $parser->constructTree();
+        $dom = $this->frame->getDocument();
+
+        $style = Api::getStyleContent($dom);
+        $cssTokenizer = new CssTokenizer($style);
+        $cssom = (new CssParser($cssTokenizer))->parseStylesheet();
+
+        $this->style = $cssom;
     }
 
     /**
@@ -74,10 +93,59 @@ class Page
     }
 
     /**
+     * レイアウトビューを設定
+     */
+    private function setLayoutView(): void
+    {
+        $dom = $this->frame?->getDocument();
+        if ($dom === null) {
+            return;
+        }
+
+        $style = $this->style;
+        if ($style === null) {
+            return;
+        }
+
+        $this->layoutView = new LayoutView($dom, $style);
+    }
+
+    /**
+     * ペイントツリーを作成
+     */
+    private function paintTree(): void
+    {
+        if ($this->layoutView !== null) {
+            $this->displayItems = $this->layoutView->paint();
+        }
+    }
+
+    /**
+     * ディスプレイアイテムを取得
+     *
+     * @return DisplayItem[]
+     */
+    public function getDisplayItems(): array
+    {
+        return $this->displayItems;
+    }
+
+    /**
+     * ディスプレイアイテムをクリア
+     */
+    public function clearDisplayItems(): void
+    {
+        $this->displayItems = [];
+    }
+
+    /**
      * ページをクリア
      */
     public function clear(): void
     {
         $this->frame = null;
+        $this->style = null;
+        $this->layoutView = null;
+        $this->displayItems = [];
     }
 }
