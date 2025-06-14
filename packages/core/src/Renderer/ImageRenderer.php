@@ -26,7 +26,7 @@ class ImageRenderer
      * @param int $width 画像の幅
      * @param int $height 画像の高さ
      */
-    public function __construct(int $width = 800, int $height = 600)
+    public function __construct(int $width = 600, int $height = 400)
     {
         $this->width = $width;
         $this->height = $height;

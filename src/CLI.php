@@ -300,8 +300,8 @@ HTML;
                     $displayItems = $currentPage->getDisplayItems();
                     echo "Generated " . count($displayItems) . " display items\n";
 
-                    // 画像レンダラーを作成（800x600ピクセル）
-                    $renderer = new ImageRenderer(800, 600);
+                    // 画像レンダラーを作成（600x400ピクセル、sababook ch6に合わせる）
+                    $renderer = new ImageRenderer(600, 400);
                     $renderer->render($displayItems);
 
                     // ファイル名を生成（タイムスタンプ付き）
@@ -310,7 +310,7 @@ HTML;
 
                     if ($saved) {
                         echo "✓ Image saved successfully to: $filename\n";
-                        echo "  Image dimensions: 800x600 pixels\n";
+                        echo "  Image dimensions: 600x400 pixels\n";
                         echo "  File location: " . realpath($filename) . "\n";
                     } else {
                         echo "✗ Failed to save image to: $filename\n";

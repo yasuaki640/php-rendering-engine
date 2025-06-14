@@ -10,6 +10,8 @@ class LayoutConstants
     public const WINDOW_HEIGHT = 400;
     public const WINDOW_PADDING = 5;
 
+    public const ADDRESSBAR_HEIGHT = 20;
+
     // noliライブラリに定義されている定数
     public const TITLE_BAR_HEIGHT = 24;
 

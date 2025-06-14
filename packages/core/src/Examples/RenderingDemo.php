@@ -119,7 +119,7 @@ HTML;
             $displayItems = $page->getDisplayItems();
 
             // 画像レンダラーでDisplayItemsを描画
-            $renderer = new ImageRenderer(800, 600);
+            $renderer = new ImageRenderer(600, 400);
             $renderer->render($displayItems);
 
             // 画像をファイルに保存
@@ -148,7 +148,7 @@ HTML;
                 $page->receiveResponse($response);
                 $displayItems = $page->getDisplayItems();
 
-                $renderer = new ImageRenderer(800, 600);
+                $renderer = new ImageRenderer(600, 400);
                 $renderer->render($displayItems);
                 $renderer->saveToFile($filename);
             } catch (\Exception $e) {
