@@ -4,6 +4,7 @@ namespace Yasuaki640\PhpRenderingEngine;
 
 use Yasuaki640\PhpRenderingEngine\Core\Browser;
 use Yasuaki640\PhpRenderingEngine\Core\DomUtils;
+use Yasuaki640\PhpRenderingEngine\Core\Examples\BrowserExample;
 use Yasuaki640\PhpRenderingEngine\Core\HttpResponse;
 use Yasuaki640\PhpRenderingEngine\Net\HttpClient;
 
@@ -19,11 +20,14 @@ class CLI
             $this->testExampleCom();
         } elseif (count($args) > 1 && $args[1] === 'test-browser') {
             $this->testBrowser();
+        } elseif (count($args) > 1 && $args[1] === 'test-browser-example') {
+            $this->runBrowserExample();
         } else {
             echo "Available commands:\n";
-            echo "  test-http     - Test HTTP client with httpbin.org\n";
-            echo "  test-example  - Test HTTP client with example.com\n";
-            echo "  test-browser  - Test Browser and Page classes\n";
+            echo "  test-http           - Test HTTP client with httpbin.org\n";
+            echo "  test-example        - Test HTTP client with example.com\n";
+            echo "  test-browser        - Test Browser and Page classes (simple, based on ch5/main.rs)\n";
+            echo "  test-browser-example - Run detailed BrowserExample class\n";
             echo "\nUsage: php bin/hello <command>\n";
         }
     }
@@ -193,5 +197,22 @@ HTML;
         }
 
         echo "--- End of verification ---\n";
+    }
+
+    /**
+     * 詳細なBrowserExampleクラスを実行
+     */
+    private function runBrowserExample(): void
+    {
+        try {
+            $example = new BrowserExample();
+            $example->run();
+            echo "\n=== BrowserExample completed successfully ===\n";
+        } catch (\Exception $e) {
+            echo "Error running BrowserExample: " . $e->getMessage() . "\n";
+            echo "File: " . $e->getFile() . "\n";
+            echo "Line: " . $e->getLine() . "\n";
+            echo "Stack trace:\n" . $e->getTraceAsString() . "\n";
+        }
     }
 }

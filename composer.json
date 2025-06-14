@@ -43,7 +43,8 @@
         "cs-check": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix --dry-run --diff",
         "test-http": "php bin/hello test-http",
         "test-example": "php bin/hello test-example",
-        "test-browser": "php bin/hello test-browser"
+        "test-browser": "php bin/hello test-browser",
+        "test-browser-example": "php bin/hello test-browser-example"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
