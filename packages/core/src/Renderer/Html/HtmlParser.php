@@ -29,6 +29,7 @@ class HtmlParser
     /** @var Node[] */
     private array $stackOfOpenElements;
     private HtmlTokenizer $tokenizer;
+    private bool $isSkippingTitle;
 
     public function __construct(string $html)
     {
@@ -37,6 +38,7 @@ class HtmlParser
         $this->originalInsertionMode = InsertionMode::Initial;
         $this->stackOfOpenElements = [];
         $this->tokenizer = new HtmlTokenizer($html);
+        $this->isSkippingTitle = false;
     }
 
     /**
@@ -78,15 +80,10 @@ class HtmlParser
     {
         switch (true) {
             case $token instanceof CharToken:
-                // 空白文字は無視
-                if (trim($token->getChar()) === '') {
-                    return;
-                }
-                // 非空白文字の場合は BeforeHtml モードに移行
-                $this->mode = InsertionMode::BeforeHtml;
-                $this->handleBeforeHtmlMode($token);
-
-                break;
+                // 本書では、DOCTYPEトークンをサポートしていないため、
+                // <!doctype html>のようなトークンは文字トークンとして表される。
+                // 文字トークンは無視する（ch6の実装に従う）
+                return;
 
             case $token instanceof StartTag:
                 $this->mode = InsertionMode::BeforeHtml;
@@ -108,7 +105,6 @@ class HtmlParser
 
             default:
                 $this->mode = InsertionMode::BeforeHtml;
-                $this->handleBeforeHtmlMode($token);
 
                 break;
         }
@@ -210,6 +206,11 @@ class HtmlParser
     {
         switch (true) {
             case $token instanceof CharToken:
+                // titleスキップ中は文字トークンを無視
+                if ($this->isSkippingTitle) {
+                    return;
+                }
+                
                 // 空白文字は挿入
                 if (trim($token->getChar()) === '') {
                     $this->insertChar($token->getChar());
@@ -225,20 +226,20 @@ class HtmlParser
 
             case $token instanceof StartTag:
                 $tagName = $token->getTag();
-                if (in_array($tagName, ['title', 'meta', 'link', 'style', 'script'])) {
+                if ($tagName === 'style' || $tagName === 'script') {
                     $element = $this->createElement($token);
                     $this->insertElement($element);
-
-                    if (in_array($tagName, ['script', 'style'])) {
-                        $this->originalInsertionMode = $this->mode;
-                        $this->mode = InsertionMode::Text;
-                    }
-
-                    if (! $token->isSelfClosing() && ! in_array($tagName, ['script', 'style'])) {
-                        $this->popCurrentNode();
-                    }
+                    $this->originalInsertionMode = $this->mode;
+                    $this->mode = InsertionMode::Text;
+                } elseif (in_array($tagName, ['meta', 'link'])) {
+                    // <meta>や<link>などのサポートしていないタグは無視する（ch6に従う）
+                    return;
+                } elseif ($tagName === 'title') {
+                    // <title>タグとその内容を完全に無視する（ch6に従う）
+                    $this->isSkippingTitle = true;
+                    return;
                 } else {
-                    // その他の開始タグは head を終了
+                    // その他の開始タグは head を終了してbodyモードに
                     $this->popCurrentNode();
                     $this->mode = InsertionMode::AfterHead;
                     $this->handleAfterHeadMode($token);
@@ -247,7 +248,11 @@ class HtmlParser
                 break;
 
             case $token instanceof EndTag:
-                if ($token->getTag() === 'head') {
+                if ($token->getTag() === 'title' && $this->isSkippingTitle) {
+                    // title終了タグでスキップモードを終了
+                    $this->isSkippingTitle = false;
+                    return;
+                } elseif ($token->getTag() === 'head') {
                     $this->popCurrentNode();
                     $this->mode = InsertionMode::AfterHead;
                 } else {
@@ -392,27 +397,38 @@ class HtmlParser
     private function handleTextMode(HtmlToken $token): void
     {
         switch (true) {
+            case $token instanceof EndTag:
+                $tagName = $token->getTag();
+                if ($tagName === 'style') {
+                    $this->popUntil('style');
+                    $this->mode = $this->originalInsertionMode;
+                } elseif ($tagName === 'script') {
+                    $this->popUntil('script');
+                    $this->mode = $this->originalInsertionMode;
+                } else {
+                    $this->insertChar('</' . $tagName . '>');
+                }
+
+                break;
+
             case $token instanceof CharToken:
                 $this->insertChar($token->getChar());
 
                 break;
 
-            case $token instanceof EndTag:
-                $tagName = $token->getTag();
-                if (in_array($tagName, ['script', 'style'])) {
-                    $this->popCurrentNode();
-                    $this->mode = $this->originalInsertionMode;
-                }
-
-                break;
-
             case $token instanceof EofToken:
-                $this->popCurrentNode();
+                if (!empty($this->stackOfOpenElements)) {
+                    $this->popCurrentNode();
+                }
                 $this->mode = $this->originalInsertionMode;
 
                 break;
 
             default:
+                // startTagなど他のトークンは文字として挿入
+                if ($token instanceof StartTag) {
+                    $this->insertChar('<' . $token->getTag() . '>');
+                }
                 break;
         }
     }
