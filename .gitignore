@@ -40,3 +40,5 @@ vendor/
 /build/
 
 # End of https://www.toptal.com/developers/gitignore/api/phpunit,php-cs-fixer
+
+*.png
