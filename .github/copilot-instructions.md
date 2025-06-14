@@ -10,10 +10,9 @@
 ## 開発ガイドライン
 
 ### Composer使用方法
-- **重要**: このプロジェクトでは、ルートディレクトリに存在する`composer.phar`を使用してcomposerコマンドを実行してください
-- 依存関係の追加: `php composer.phar require package/name`
-- 依存関係の更新: `php composer.phar update`
-- オートロード再生成: `php composer.phar dump-autoload`
+- 依存関係の追加: `composer require package/name`
+- 依存関係の更新: `composer update`
+- オートロード再生成: `composer dump-autoload`
 
 ### コーディング規約
 - PHP-CS-Fixerを使用してコードフォーマットを統一
@@ -37,17 +36,17 @@
 ## 開発時の注意点
 1. 新しいクラスを作成する際は、既存phpファイルのnamespaceを参考に設定する
 2. 依存関係を追加する際は、該当パッケージの`composer.json`を更新する
-3. コードを書いた後は必ずPHP-CS-Fixerでフォーマットする（`php composer.phar run cs-fix`）
+3. コードを書いた後は必ずPHP-CS-Fixerでフォーマットする（`composer run cs-fix`）
 5. 1ファイルには1つのクラスのみを定義する
 6. ファイルをrustから移植する場合、それをどのpackageに追加するか、sababookのファイルパスを参考にして配置する
 
 ## よく使用するコマンド
 ```bash
 # コードフォーマット実行（推奨）
-php composer.phar run cs-fix
+composer run cs-fix
 
 # コードフォーマットチェック（実際の変更は行わない）
-php composer.phar run cs-check
+composer run cs-check
 
 # テスト実行（基本）
 ./vendor/bin/phpunit
@@ -56,11 +55,11 @@ php composer.phar run cs-check
 ./vendor/bin/phpunit --verbose --display-warnings --display-deprecations
 
 # 依存関係インストール
-php composer.phar install
+composer install
 
 # 依存関係更新
-php composer.phar update
+composer update
 
 # オートロード再生成
-php composer.phar dump-autoload
+composer dump-autoload
 ```
