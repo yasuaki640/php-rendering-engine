@@ -7,7 +7,9 @@ use Yasuaki640\PhpRenderingEngine\Core\DomUtils;
 use Yasuaki640\PhpRenderingEngine\Core\Examples\BrowserExample;
 use Yasuaki640\PhpRenderingEngine\Core\Examples\RenderingDemo;
 use Yasuaki640\PhpRenderingEngine\Core\HttpResponse;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\ImageRenderer;
 use Yasuaki640\PhpRenderingEngine\Net\HttpClient;
+use Yasuaki640\PhpRenderingEngine\UriParser\Url;
 
 class CLI
 {
@@ -25,6 +27,8 @@ class CLI
             $this->runBrowserExample();
         } elseif (count($args) > 1 && $args[1] === 'render-samples') {
             $this->renderSamplePages();
+        } elseif (count($args) > 1 && $args[1] === 'render-example') {
+            $this->renderExample();
         } else {
             echo "Available commands:\n";
             echo "  test-http           - Test HTTP client with httpbin.org\n";
@@ -32,6 +36,7 @@ class CLI
             echo "  test-browser        - Test Browser and Page classes (simple, based on ch5/main.rs)\n";
             echo "  test-browser-example - Run detailed BrowserExample class\n";
             echo "  render-samples      - Render all sample HTML pages to images (ch6 app.rs equivalent)\n";
+            echo "  render-example      - Render example.com using net and uri-parser packages\n";
             echo "\nUsage: php bin/hello <command>\n";
         }
     }
@@ -233,6 +238,90 @@ HTML;
             echo "\n=== All sample pages rendered successfully ===\n";
         } catch (\Exception $e) {
             echo "Error rendering sample pages: " . $e->getMessage() . "\n";
+            echo "File: " . $e->getFile() . "\n";
+            echo "Line: " . $e->getLine() . "\n";
+            echo "Stack trace:\n" . $e->getTraceAsString() . "\n";
+        }
+    }
+
+    /**
+     * example.comを描画（netとuri-parserパッケージを使用）
+     */
+    private function renderExample(): void
+    {
+        echo "=== Rendering example.com (using net and uri-parser packages) ===\n\n";
+
+        try {
+            // URLをパース
+            $url = 'http://example.com';
+            echo "Parsing URL: $url\n";
+
+            $urlObj = new Url($url);
+            $parsedUrl = $urlObj->parse();
+
+            echo "Parsed URL details:\n";
+            echo "  Host: " . $parsedUrl->host . "\n";
+            echo "  Port: " . $parsedUrl->port . "\n";
+            echo "  Path: " . ($parsedUrl->path ?: '/') . "\n";
+            echo "  Search part: " . $parsedUrl->searchpart . "\n\n";
+
+            // HTTPクライアントを使用してリクエスト
+            echo "Sending HTTP request...\n";
+            $client = new HttpClient();
+            $response = $client->get(
+                $parsedUrl->host,
+                (int) $parsedUrl->port,
+                $parsedUrl->path ?: '/'
+            );
+
+            echo "Response received!\n";
+            $this->printResponse($response);
+
+            // ブラウザーでページを処理
+            echo "\n--- Processing with Browser ---\n";
+            $browser = new Browser();
+            $currentPage = $browser->getCurrentPage();
+
+            $domString = $currentPage->receiveResponse($response);
+            echo "Page loaded: " . ($currentPage->isLoaded() ? 'Yes' : 'No') . "\n";
+
+            if ($currentPage->isLoaded()) {
+                $frame = $currentPage->getFrame();
+                $document = $frame->getDocument();
+
+                echo "\n--- DOM Tree Structure ---\n";
+                $domTreeString = DomUtils::convertDomToString($document);
+                echo $domTreeString;
+                echo "--- End of DOM Tree ---\n";
+
+                // 画像レンダリング処理を追加
+                echo "\n--- Rendering to Image ---\n";
+                try {
+                    $displayItems = $currentPage->getDisplayItems();
+                    echo "Generated " . count($displayItems) . " display items\n";
+
+                    // 画像レンダラーを作成（800x600ピクセル）
+                    $renderer = new ImageRenderer(800, 600);
+                    $renderer->render($displayItems);
+
+                    // ファイル名を生成（タイムスタンプ付き）
+                    $filename = 'example-com-' . date('Y-m-d-H-i-s') . '.png';
+                    $saved = $renderer->saveToFile($filename);
+
+                    if ($saved) {
+                        echo "✓ Image saved successfully to: $filename\n";
+                        echo "  Image dimensions: 800x600 pixels\n";
+                        echo "  File location: " . realpath($filename) . "\n";
+                    } else {
+                        echo "✗ Failed to save image to: $filename\n";
+                    }
+                } catch (\Exception $imageError) {
+                    echo "Error during image rendering: " . $imageError->getMessage() . "\n";
+                }
+            }
+
+        } catch (\Exception $e) {
+            echo "Error rendering example.com: " . $e->getMessage() . "\n";
             echo "File: " . $e->getFile() . "\n";
             echo "Line: " . $e->getLine() . "\n";
             echo "Stack trace:\n" . $e->getTraceAsString() . "\n";

@@ -46,6 +46,7 @@
         "test-browser": "php bin/hello test-browser",
         "test-browser-example": "php bin/hello test-browser-example",
         "render-samples": "php bin/hello render-samples",
+        "render-example": "php bin/hello render-example",
         "test-all-packages": [
             "cd packages/core && ./vendor/bin/phpunit --display-warnings --display-deprecations",
             "cd packages/net && ./vendor/bin/phpunit --display-warnings --display-deprecations",
