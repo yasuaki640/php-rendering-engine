@@ -296,6 +296,7 @@ HTML;
 
                 // 画像レンダリング処理を追加
                 echo "\n--- Rendering to Image ---\n";
+
                 try {
                     $displayItems = $currentPage->getDisplayItems();
                     echo "Generated " . count($displayItems) . " display items\n";
