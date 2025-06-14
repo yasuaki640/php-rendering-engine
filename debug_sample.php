@@ -17,16 +17,16 @@ try {
 
     // HttpResponseを作成
     $response = RenderingDemo::createHttpResponse($html);
-    
+
     // ページオブジェクトを作成
     $page = new Page();
-    
+
     // HTMLをパースしてレンダリング
     $page->receiveResponse($response);
-    
+
     // DisplayItemsを取得
     $displayItems = $page->getDisplayItems();
-    
+
     echo "Generated " . count($displayItems) . " display items:\n";
     foreach ($displayItems as $i => $item) {
         echo "  Item $i: " . get_class($item) . "\n";

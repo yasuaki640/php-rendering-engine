@@ -118,21 +118,14 @@ HTML;
             // DisplayItemsを取得
             $displayItems = $page->getDisplayItems();
 
-            echo "Generated " . count($displayItems) . " display items\n";
-
             // 画像レンダラーでDisplayItemsを描画
             $renderer = new ImageRenderer(800, 600);
             $renderer->render($displayItems);
 
             // 画像をファイルに保存
-            if ($renderer->saveToFile($filename)) {
-                echo "Successfully saved rendered page to: $filename\n";
-            } else {
-                echo "Failed to save image to: $filename\n";
-            }
+            $renderer->saveToFile($filename);
         } catch (\Exception $e) {
-            echo "Error rendering page: " . $e->getMessage() . "\n";
-            echo "Stack trace:\n" . $e->getTraceAsString() . "\n";
+            throw $e;
         }
     }
 
@@ -148,8 +141,6 @@ HTML;
         ];
 
         foreach ($samples as $filename => $html) {
-            echo "Rendering $filename...\n";
-
             $response = self::createHttpResponse($html);
             $page = new Page();
 
@@ -157,18 +148,11 @@ HTML;
                 $page->receiveResponse($response);
                 $displayItems = $page->getDisplayItems();
 
-                echo "  Generated " . count($displayItems) . " display items\n";
-
                 $renderer = new ImageRenderer(800, 600);
                 $renderer->render($displayItems);
-
-                if ($renderer->saveToFile($filename)) {
-                    echo "  Successfully saved: $filename\n";
-                } else {
-                    echo "  Failed to save: $filename\n";
-                }
+                $renderer->saveToFile($filename);
             } catch (\Exception $e) {
-                echo "  Error: " . $e->getMessage() . "\n";
+                throw $e;
             }
         }
     }
