@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Html\Tests;
+namespace Yasuaki640\PhpRenderingEngine\Core\Tests\Renderer\Html;
 
 use PHPUnit\Framework\TestCase;
 use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\NodeKind;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Tests\Dom;
+namespace Yasuaki640\PhpRenderingEngine\Core\Tests\Renderer\Dom;
 
 use PHPUnit\Framework\TestCase;
 use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\ElementKind;

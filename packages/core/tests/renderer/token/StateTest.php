@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Tests\Token;
+namespace Yasuaki640\PhpRenderingEngine\Core\Tests\Renderer\Token;
 
 use PHPUnit\Framework\TestCase;
 use Yasuaki640\PhpRenderingEngine\Core\Renderer\Token\State;
