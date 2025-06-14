@@ -297,6 +297,22 @@ class LayoutObject
                     }
 
                     break;
+
+                case 'text-decoration':
+                    try {
+                        $valueStr = $value ? $value->value : '';
+                        $textDecoration = match ($valueStr) {
+                            'none' => TextDecoration::None,
+                            'underline' => TextDecoration::Underline,
+                            default => TextDecoration::None,
+                        };
+                        $this->style->setTextDecoration($textDecoration);
+                    } catch (\Exception $e) {
+                        // エラーの場合はデフォルト値を使用
+                        $this->style->setTextDecoration(TextDecoration::None);
+                    }
+
+                    break;
             }
         }
     }

@@ -118,6 +118,11 @@ class ComputedStyle
         return $this->fontSize;
     }
 
+    public function setTextDecoration(TextDecoration $textDecoration): void
+    {
+        $this->textDecoration = $textDecoration;
+    }
+
     public function getTextDecoration(): TextDecoration
     {
         if ($this->textDecoration === null) {
