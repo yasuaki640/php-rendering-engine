@@ -39,12 +39,27 @@
         "bin/hello"
     ],
     "scripts": {
-        "cs-fix": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix",
-        "cs-check": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix --dry-run --diff",
+        "cs-fix": "PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer fix",
+        "cs-check": "PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer fix --dry-run --diff",
         "test-http": "php bin/hello test-http",
         "test-example": "php bin/hello test-example",
         "test-browser": "php bin/hello test-browser",
-        "test-browser-example": "php bin/hello test-browser-example"
+        "test-browser-example": "php bin/hello test-browser-example",
+        "test-all-packages": [
+            "cd packages/core && ./vendor/bin/phpunit --display-warnings --display-deprecations",
+            "cd packages/net && ./vendor/bin/phpunit --display-warnings --display-deprecations",
+            "cd packages/uri-parser && ./vendor/bin/phpunit --display-warnings --display-deprecations"
+        ],
+        "cs-fix-all-packages": [
+            "cd packages/core && composer run cs-fix",
+            "cd packages/net && composer run cs-fix",
+            "cd packages/uri-parser && composer run cs-fix"
+        ],
+        "cs-check-all-packages": [
+            "cd packages/core && composer run cs-check",
+            "cd packages/net && composer run cs-check",
+            "cd packages/uri-parser && composer run cs-check"
+        ]
     },
     "minimum-stability": "dev",
     "prefer-stable": true

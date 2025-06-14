@@ -78,20 +78,8 @@ jobs:
       working-directory: packages/uri-parser
       run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
-    - name: Run PHP-CS-Fixer check
-      run: composer run cs-check
-
-    - name: Run core package tests
-      working-directory: packages/core
-      run: ../../vendor/bin/phpunit --display-warnings --display-deprecations
-
-    - name: Run net package tests
-      working-directory: packages/net
-      run: ../../vendor/bin/phpunit --display-warnings --display-deprecations
-
-    - name: Run uri-parser package tests
-      working-directory: packages/uri-parser
-      run: ../../vendor/bin/phpunit --display-warnings --display-deprecations
+    - name: Run all package tests
+      run: composer run test-all-packages
 
   code-style:
     runs-on: ubuntu-latest
@@ -123,17 +111,8 @@ jobs:
     - name: Install dependencies
       run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
-    - name: Check code style
+    - name: Check main code style
       run: composer run cs-check
 
-    - name: Check core package code style
-      working-directory: packages/core
-      run: composer run cs-check
-
-    - name: Check net package code style
-      working-directory: packages/net
-      run: composer run cs-check
-
-    - name: Check uri-parser package code style
-      working-directory: packages/uri-parser
-      run: composer run cs-check
+    - name: Check all packages code style
+      run: composer run cs-check-all-packages
