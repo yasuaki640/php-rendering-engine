@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer\Html;
+namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Html;
 
 /**
  * HTML文書解析時の挿入モードを表すEnum

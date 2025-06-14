@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Tests;
+namespace Yasuaki640\PhpRenderingEngine\Core\Tests;
 
-use MyApp\Core\Error;
-use MyApp\Core\ErrorWithMessage;
 use PHPUnit\Framework\TestCase;
+use Yasuaki640\PhpRenderingEngine\Core\Error;
+use Yasuaki640\PhpRenderingEngine\Core\ErrorWithMessage;
 
 class ErrorTest extends TestCase
 {

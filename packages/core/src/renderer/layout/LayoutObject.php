@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer\Layout;
+namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout;
 
-use MyApp\Core\Renderer\Css\Selector;
-use MyApp\Core\Renderer\Css\SelectorType;
-use MyApp\Core\Renderer\Dom\Element;
-use MyApp\Core\Renderer\Dom\Node;
-use MyApp\Core\Renderer\Dom\NodeKind;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Css\Selector;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Css\SelectorType;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\Element;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\Node;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\NodeKind;
 
 class LayoutObject
 {

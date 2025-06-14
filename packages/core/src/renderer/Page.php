@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer;
+namespace Yasuaki640\PhpRenderingEngine\Core\Renderer;
 
-use MyApp\Core\Browser;
-use MyApp\Core\HttpResponse;
-use MyApp\Core\Renderer\Css\CssParser;
-use MyApp\Core\Renderer\Css\CssTokenizer;
-use MyApp\Core\Renderer\Css\StyleSheet;
-use MyApp\Core\Renderer\Dom\Api;
-use MyApp\Core\Renderer\Dom\Window;
-use MyApp\Core\Renderer\Html\HtmlParser;
-use MyApp\Core\Renderer\Layout\DisplayItem;
-use MyApp\Core\Renderer\Layout\LayoutView;
+use Yasuaki640\PhpRenderingEngine\Core\Browser;
+use Yasuaki640\PhpRenderingEngine\Core\HttpResponse;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Css\CssParser;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Css\CssTokenizer;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Css\StyleSheet;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\Api;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\Window;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Html\HtmlParser;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\DisplayItem;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\LayoutView;
 
 /**
  * ページクラス

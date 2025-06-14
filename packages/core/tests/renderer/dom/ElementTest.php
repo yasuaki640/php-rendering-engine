@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer\Tests\Dom;
+namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Tests\Dom;
 
-use MyApp\Core\Renderer\Dom\Element;
-use MyApp\Core\Renderer\Dom\ElementKind;
-use MyApp\Core\Renderer\Html\Attribute;
 use PHPUnit\Framework\TestCase;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\Element;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\ElementKind;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Html\Attribute;
 
 class ElementTest extends TestCase
 {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Tests;
+namespace Yasuaki640\PhpRenderingEngine\Core\Tests;
 
-use MyApp\Core\Browser;
 use PHPUnit\Framework\TestCase;
+use Yasuaki640\PhpRenderingEngine\Core\Browser;
 
 class BrowserTest extends TestCase
 {

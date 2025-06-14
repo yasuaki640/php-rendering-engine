@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer\Tests\Token;
+namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Tests\Token;
 
-use MyApp\Core\Renderer\Token\CharToken;
 use PHPUnit\Framework\TestCase;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Token\CharToken;
 
 class CharTokenTest extends TestCase
 {

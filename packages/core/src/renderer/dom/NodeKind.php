@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer\Dom;
+namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom;
 
 /**
  * DOMノードの種類を表すenum

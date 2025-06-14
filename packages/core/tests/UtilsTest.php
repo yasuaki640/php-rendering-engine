@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Tests;
+namespace Yasuaki640\PhpRenderingEngine\Core\Tests;
 
-use MyApp\Core\renderer\dom\Element;
-use MyApp\Core\renderer\dom\Node;
-use MyApp\Core\renderer\dom\NodeKind;
-use MyApp\Core\Utils;
 use PHPUnit\Framework\TestCase;
+use Yasuaki640\PhpRenderingEngine\Core\renderer\dom\Element;
+use Yasuaki640\PhpRenderingEngine\Core\renderer\dom\Node;
+use Yasuaki640\PhpRenderingEngine\Core\renderer\dom\NodeKind;
+use Yasuaki640\PhpRenderingEngine\Core\Utils;
 
 class UtilsTest extends TestCase
 {

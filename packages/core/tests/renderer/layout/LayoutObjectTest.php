@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Tests\Renderer\Layout;
+namespace Yasuaki640\PhpRenderingEngine\Core\Tests\Renderer\Layout;
 
-use MyApp\Core\Renderer\Dom\Element;
-use MyApp\Core\Renderer\Dom\Node;
-use MyApp\Core\Renderer\Dom\NodeKind;
-use MyApp\Core\Renderer\Layout\ComputedStyle;
-use MyApp\Core\Renderer\Layout\DisplayType;
-use MyApp\Core\Renderer\Layout\LayoutObject;
-use MyApp\Core\Renderer\Layout\LayoutObjectKind;
-use MyApp\Core\Renderer\Layout\LayoutPoint;
-use MyApp\Core\Renderer\Layout\LayoutSize;
 use PHPUnit\Framework\TestCase;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\Element;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\Node;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\NodeKind;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\ComputedStyle;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\DisplayType;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\LayoutObject;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\LayoutObjectKind;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\LayoutPoint;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\LayoutSize;
 
 class LayoutObjectTest extends TestCase
 {

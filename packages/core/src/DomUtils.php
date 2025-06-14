@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core;
+namespace Yasuaki640\PhpRenderingEngine\Core;
 
-use MyApp\Core\Renderer\Dom\Node;
-use MyApp\Core\Renderer\Dom\NodeKind;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\Node;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\NodeKind;
 
 /**
  * DOM操作のユーティリティクラス

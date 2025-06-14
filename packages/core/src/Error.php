@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core;
+namespace Yasuaki640\PhpRenderingEngine\Core;
 
 /**
  * Unified error enum corresponding to error.rs in the Rust implementation.

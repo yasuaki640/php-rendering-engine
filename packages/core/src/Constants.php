@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core;
+namespace Yasuaki640\PhpRenderingEngine\Core;
 
 /**
  * Constants for layout and window dimensions.

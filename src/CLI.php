@@ -2,10 +2,10 @@
 
 namespace Yasuaki640\PhpRenderingEngine;
 
-use MyApp\Core\Browser;
-use MyApp\Core\DomUtils;
-use MyApp\Core\HttpResponse;
-use MyApp\Net\HttpClient;
+use Yasuaki640\PhpRenderingEngine\Core\Browser;
+use Yasuaki640\PhpRenderingEngine\Core\DomUtils;
+use Yasuaki640\PhpRenderingEngine\Core\HttpResponse;
+use Yasuaki640\PhpRenderingEngine\Net\HttpClient;
 
 class CLI
 {

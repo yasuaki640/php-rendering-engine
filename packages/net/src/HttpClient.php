@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Net;
+namespace Yasuaki640\PhpRenderingEngine\Net;
 
-use MyApp\Core\HttpResponse;
+use Yasuaki640\PhpRenderingEngine\Core\HttpResponse;
 
 class HttpClient
 {

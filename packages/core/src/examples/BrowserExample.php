@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Examples;
+namespace Yasuaki640\PhpRenderingEngine\Core\Examples;
 
-use MyApp\Core\Browser;
-use MyApp\Core\HttpResponse;
-use MyApp\Net\HttpClient;
+use Yasuaki640\PhpRenderingEngine\Core\Browser;
+use Yasuaki640\PhpRenderingEngine\Core\HttpResponse;
+use Yasuaki640\PhpRenderingEngine\Net\HttpClient;
 
 /**
  * BrowserとPageの使用例

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer\Html;
+namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Html;
 
 class Attribute
 {

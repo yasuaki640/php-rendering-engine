@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer\Tests\Dom;
+namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Tests\Dom;
 
-use MyApp\Core\Renderer\Dom\ElementKind;
 use PHPUnit\Framework\TestCase;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\ElementKind;
 
 class ElementKindTest extends TestCase
 {

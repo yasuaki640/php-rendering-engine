@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer\Css;
+namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Css;
 
 /**
  * Peekable wrapper for CssTokenizer to provide peek functionality

@@ -1,15 +1,15 @@
 {
-    "name": "my-app/uri-parser",
+    "name": "yasuaki640/php-rendering-engine-uri-parser",
     "description": "A module for parsing URIs.",
     "type": "library",
     "autoload": {
         "psr-4": {
-            "MyApp\\UriParser\\": "src/"
+            "Yasuaki640\\PhpRenderingEngine\\UriParser\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "MyApp\\UriParser\\Tests\\": "tests/"
+            "Yasuaki640\\PhpRenderingEngine\\UriParser\\Tests\\": "tests/"
         }
     },
     "require": {},

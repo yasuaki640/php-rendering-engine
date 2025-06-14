@@ -1,19 +1,19 @@
 {
-    "name": "my-app/net",
+    "name": "yasuaki640/php-rendering-engine-net",
     "description": "A module for network operations.",
     "type": "library",
     "autoload": {
         "psr-4": {
-            "MyApp\\Net\\": "src/"
+            "Yasuaki640\\PhpRenderingEngine\\Net\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "MyApp\\Net\\Tests\\": "tests/"
+            "Yasuaki640\\PhpRenderingEngine\\Net\\Tests\\": "tests/"
         }
     },
     "require": {
-        "my-app/core": "dev-main"
+        "yasuaki640/php-rendering-engine-core": "dev-main"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.0"

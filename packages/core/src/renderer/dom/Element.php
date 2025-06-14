@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer\Dom;
+namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom;
 
-use MyApp\Core\Renderer\Html\Attribute;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Html\Attribute;
 
 /**
  * DOM Element

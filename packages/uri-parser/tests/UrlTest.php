@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MyApp\UriParser\Tests;
+namespace Yasuaki640\PhpRenderingEngine\UriParser\Tests;
 
-use MyApp\UriParser\Url;
 use PHPUnit\Framework\TestCase;
+use Yasuaki640\PhpRenderingEngine\UriParser\Url;
 
 class UrlTest extends TestCase
 {

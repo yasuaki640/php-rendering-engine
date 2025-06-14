@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core;
+namespace Yasuaki640\PhpRenderingEngine\Core;
 
-use MyApp\Core\renderer\dom\Node;
+use Yasuaki640\PhpRenderingEngine\Core\renderer\dom\Node;
 
 /**
  * Utility functions for DOM manipulation and debugging.

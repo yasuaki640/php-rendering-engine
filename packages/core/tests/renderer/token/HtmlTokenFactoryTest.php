@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer\Tests\Token;
+namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Tests\Token;
 
-use MyApp\Core\Renderer\Html\Attribute;
-use MyApp\Core\Renderer\Token\CharToken;
-use MyApp\Core\Renderer\Token\EndTag;
-use MyApp\Core\Renderer\Token\EofToken;
-use MyApp\Core\Renderer\Token\HtmlTokenFactory;
-use MyApp\Core\Renderer\Token\StartTag;
 use PHPUnit\Framework\TestCase;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Html\Attribute;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Token\CharToken;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Token\EndTag;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Token\EofToken;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Token\HtmlTokenFactory;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Token\StartTag;
 
 class HtmlTokenFactoryTest extends TestCase
 {

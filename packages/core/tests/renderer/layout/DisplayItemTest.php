@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Tests\Renderer\Layout;
+namespace Yasuaki640\PhpRenderingEngine\Core\Tests\Renderer\Layout;
 
-use MyApp\Core\Renderer\Layout\ComputedStyle;
-use MyApp\Core\Renderer\Layout\DisplayItem;
-use MyApp\Core\Renderer\Layout\LayoutPoint;
-use MyApp\Core\Renderer\Layout\LayoutSize;
-use MyApp\Core\Renderer\Layout\RectDisplayItem;
-use MyApp\Core\Renderer\Layout\TextDisplayItem;
 use PHPUnit\Framework\TestCase;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\ComputedStyle;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\DisplayItem;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\LayoutPoint;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\LayoutSize;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\RectDisplayItem;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\TextDisplayItem;
 
 class DisplayItemTest extends TestCase
 {
