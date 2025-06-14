@@ -1,0 +1,111 @@
+name: Test Suite
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        php-version: [8.4]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup PHP ${{ matrix.php-version }}
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+        extensions: mbstring, xml, ctype, json, intl, curl
+        coverage: xdebug
+        tools: composer
+
+    - name: Get composer cache directory
+      id: composer-cache
+      run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+    - name: Cache composer dependencies
+      uses: actions/cache@v4
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: ${{ runner.os }}-composer-
+
+    - name: Install main dependencies
+      run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+    - name: Install core package dependencies
+      working-directory: packages/core
+      run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+    - name: Install net package dependencies
+      working-directory: packages/net
+      run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+    - name: Install uri-parser package dependencies
+      working-directory: packages/uri-parser
+      run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+    - name: Run PHP-CS-Fixer check
+      run: composer run cs-check
+
+    - name: Run core package tests
+      working-directory: packages/core
+      run: ../../vendor/bin/phpunit --display-warnings --display-deprecations
+
+    - name: Run net package tests
+      working-directory: packages/net
+      run: ../../vendor/bin/phpunit --display-warnings --display-deprecations
+
+    - name: Run uri-parser package tests
+      working-directory: packages/uri-parser
+      run: ../../vendor/bin/phpunit --display-warnings --display-deprecations
+
+  code-style:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup PHP 8.4
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.4
+        extensions: mbstring, xml, ctype, json, intl
+        tools: composer
+
+    - name: Get composer cache directory
+      id: composer-cache
+      run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+    - name: Cache composer dependencies
+      uses: actions/cache@v4
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: ${{ runner.os }}-composer-
+
+    - name: Install dependencies
+      run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+    - name: Check code style
+      run: composer run cs-check
+
+    - name: Check core package code style
+      working-directory: packages/core
+      run: composer run cs-check
+
+    - name: Check net package code style
+      working-directory: packages/net
+      run: composer run cs-check
+
+    - name: Check uri-parser package code style
+      working-directory: packages/uri-parser
+      run: composer run cs-check
