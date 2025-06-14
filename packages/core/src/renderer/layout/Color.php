@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer\Layout;
+namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout;
 
-use MyApp\Core\Exception\UnexpectedInputException;
+use Yasuaki640\PhpRenderingEngine\Core\Exception\UnexpectedInputException;
 
 class Color
 {

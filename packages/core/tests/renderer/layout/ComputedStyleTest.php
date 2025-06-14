@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Tests\Renderer\Layout;
+namespace Yasuaki640\PhpRenderingEngine\Core\Tests\Renderer\Layout;
 
-use MyApp\Core\Renderer\Layout\Color;
-use MyApp\Core\Renderer\Layout\ComputedStyle;
-use MyApp\Core\Renderer\Layout\DisplayType;
-use MyApp\Core\Renderer\Layout\FontSize;
-use MyApp\Core\Renderer\Layout\TextDecoration;
 use PHPUnit\Framework\TestCase;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\Color;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\ComputedStyle;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\DisplayType;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\FontSize;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\TextDecoration;
 
 class ComputedStyleTest extends TestCase
 {

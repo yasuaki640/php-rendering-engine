@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Tests\Renderer\Layout;
+namespace Yasuaki640\PhpRenderingEngine\Core\Tests\Renderer\Layout;
 
-use MyApp\Core\Exception\UnexpectedInputException;
-use MyApp\Core\Renderer\Layout\Color;
 use PHPUnit\Framework\TestCase;
+use Yasuaki640\PhpRenderingEngine\Core\Exception\UnexpectedInputException;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\Color;
 
 class ColorTest extends TestCase
 {

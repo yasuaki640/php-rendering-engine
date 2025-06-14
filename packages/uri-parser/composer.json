@@ -1,19 +1,26 @@
 {
-    "name": "my-app/uri-parser",
+    "name": "yasuaki640/php-rendering-engine-uri-parser",
     "description": "A module for parsing URIs.",
     "type": "library",
     "autoload": {
         "psr-4": {
-            "MyApp\\UriParser\\": "src/"
+            "Yasuaki640\\PhpRenderingEngine\\UriParser\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "MyApp\\UriParser\\Tests\\": "tests/"
+            "Yasuaki640\\PhpRenderingEngine\\UriParser\\Tests\\": "tests/"
         }
     },
     "require": {},
     "require-dev": {
-        "phpunit/phpunit": "^10.0"
+        "phpunit/phpunit": "^10.0",
+        "friendsofphp/php-cs-fixer": "^3.0"
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test-verbose": "phpunit --display-warnings --display-deprecations",
+        "cs-fix": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix",
+        "cs-check": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix --dry-run --diff"
     }
 }

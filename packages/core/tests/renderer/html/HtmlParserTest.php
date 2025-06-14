@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer\Html\Tests;
+namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Html\Tests;
 
-use MyApp\Core\Renderer\Dom\NodeKind;
-use MyApp\Core\Renderer\Html\HtmlParser;
-use MyApp\Core\Renderer\Html\InsertionMode;
 use PHPUnit\Framework\TestCase;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\NodeKind;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Html\HtmlParser;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Html\InsertionMode;
 
 /**
  * HtmlParserのテストクラス

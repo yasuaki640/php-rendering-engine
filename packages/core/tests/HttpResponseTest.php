@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Tests;
+namespace Yasuaki640\PhpRenderingEngine\Core\Tests;
 
-use MyApp\Core\Exception\NetworkException;
-use MyApp\Core\HttpResponse;
 use PHPUnit\Framework\TestCase;
+use Yasuaki640\PhpRenderingEngine\Core\Exception\NetworkException;
+use Yasuaki640\PhpRenderingEngine\Core\HttpResponse;
 
 class HttpResponseTest extends TestCase
 {

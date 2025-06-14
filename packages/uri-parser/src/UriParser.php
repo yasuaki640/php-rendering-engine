@@ -1,6 +1,6 @@
 <?php
 
-namespace MyApp\UriParser; // FIXME: my-appの命名は調整する
+namespace Yasuaki640\PhpRenderingEngine\UriParser; // FIXME: my-appの命名は調整する
 
 class UriParser
 {

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer\Layout;
+namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout;
 
-use MyApp\Core\Renderer\Css\CssParser;
-use MyApp\Core\Renderer\Css\CssTokenizer;
-use MyApp\Core\Renderer\Dom\Api;
-use MyApp\Core\Renderer\Dom\ElementKind;
-use MyApp\Core\Renderer\Html\HtmlParser;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Css\CssParser;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Css\CssTokenizer;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\Api;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\ElementKind;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Html\HtmlParser;
 
 class LayoutView
 {

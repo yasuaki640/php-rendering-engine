@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Net\Tests;
+namespace Yasuaki640\PhpRenderingEngine\Net\Tests;
 
 use PHPUnit\Framework\TestCase;
 

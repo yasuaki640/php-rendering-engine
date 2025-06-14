@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer\Html;
+namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Html;
 
-use MyApp\Core\Renderer\Dom\Element;
-use MyApp\Core\Renderer\Dom\Node;
-use MyApp\Core\Renderer\Dom\NodeKind;
-use MyApp\Core\Renderer\Dom\Window;
-use MyApp\Core\Renderer\Token\CharToken;
-use MyApp\Core\Renderer\Token\EndTag;
-use MyApp\Core\Renderer\Token\EofToken;
-use MyApp\Core\Renderer\Token\HtmlToken;
-use MyApp\Core\Renderer\Token\HtmlTokenizer;
-use MyApp\Core\Renderer\Token\StartTag;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\Element;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\Node;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\NodeKind;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\Window;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Token\CharToken;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Token\EndTag;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Token\EofToken;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Token\HtmlToken;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Token\HtmlTokenizer;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Token\StartTag;
 
 /**
  * HTMLパーサー - HTML文書をトークン化してDOMツリーを構築

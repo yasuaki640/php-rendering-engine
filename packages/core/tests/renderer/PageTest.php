@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer\Tests;
+namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Tests;
 
-use MyApp\Core\Browser;
-use MyApp\Core\HttpResponse;
-use MyApp\Core\Renderer\Page;
 use PHPUnit\Framework\TestCase;
+use Yasuaki640\PhpRenderingEngine\Core\Browser;
+use Yasuaki640\PhpRenderingEngine\Core\HttpResponse;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Page;
 
 class PageTest extends TestCase
 {

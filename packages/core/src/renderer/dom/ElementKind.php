@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer\Dom;
+namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom;
 
 /**
  * HTML要素の種類を表すenum

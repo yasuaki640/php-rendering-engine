@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core;
+namespace Yasuaki640\PhpRenderingEngine\Core;
 
-use MyApp\Core\Renderer\Page;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Page;
 
 /**
  * ブラウザークラス

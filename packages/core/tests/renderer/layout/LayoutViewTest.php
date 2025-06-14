@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Tests\Renderer\Layout;
+namespace Yasuaki640\PhpRenderingEngine\Core\Tests\Renderer\Layout;
 
-use MyApp\Core\Renderer\Dom\Element;
-use MyApp\Core\Renderer\Dom\ElementKind;
-use MyApp\Core\Renderer\Layout\LayoutObjectKind;
-use MyApp\Core\Renderer\Layout\LayoutView;
 use PHPUnit\Framework\TestCase;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\Element;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\ElementKind;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\LayoutObjectKind;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\LayoutView;
 
 class LayoutViewTest extends TestCase
 {

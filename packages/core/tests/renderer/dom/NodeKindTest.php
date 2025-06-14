@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer\Tests\Dom;
+namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Tests\Dom;
 
-use MyApp\Core\Renderer\Dom\NodeKind;
 use PHPUnit\Framework\TestCase;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\NodeKind;
 
 class NodeKindTest extends TestCase
 {

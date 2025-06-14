@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer\Token;
+namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Token;
+
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Html\Attribute;
 
 class HtmlTokenFactory
 {

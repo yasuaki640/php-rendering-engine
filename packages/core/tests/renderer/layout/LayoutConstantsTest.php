@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Tests\Renderer\Layout;
+namespace Yasuaki640\PhpRenderingEngine\Core\Tests\Renderer\Layout;
 
-use MyApp\Core\Renderer\Layout\LayoutConstants;
 use PHPUnit\Framework\TestCase;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout\LayoutConstants;
 
 class LayoutConstantsTest extends TestCase
 {

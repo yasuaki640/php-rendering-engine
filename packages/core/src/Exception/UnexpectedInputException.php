@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Exception;
+namespace Yasuaki640\PhpRenderingEngine\Core\Exception;
 
 use Exception;
 

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core;
+namespace Yasuaki640\PhpRenderingEngine\Core;
 
-use MyApp\Core\Exception\NetworkException;
+use Yasuaki640\PhpRenderingEngine\Core\Exception\NetworkException;
 
 class HttpResponse
 {

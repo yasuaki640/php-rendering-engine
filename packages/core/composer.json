@@ -1,23 +1,26 @@
 {
-    "name": "my-app/core",
+    "name": "yasuaki640/php-rendering-engine-core",
     "description": "Core components for the PHP rendering engine.",
     "type": "library",
     "autoload": {
         "psr-4": {
-            "MyApp\\Core\\": "src/"
+            "Yasuaki640\\PhpRenderingEngine\\Core\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "MyApp\\Core\\Tests\\": "tests/"
+            "Yasuaki640\\PhpRenderingEngine\\Core\\Tests\\": "tests/"
         }
     },
     "require": {},
     "require-dev": {
-        "phpunit/phpunit": "^10.0"
+        "phpunit/phpunit": "^10.0",
+        "friendsofphp/php-cs-fixer": "^3.0"
     },
     "scripts": {
         "test": "phpunit",
-        "test-verbose": "phpunit --display-warnings --display-deprecations"
+        "test-verbose": "phpunit --display-warnings --display-deprecations",
+        "cs-fix": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix",
+        "cs-check": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix --dry-run --diff"
     }
 }

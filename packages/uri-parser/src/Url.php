@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyApp\UriParser;
+namespace Yasuaki640\PhpRenderingEngine\UriParser;
 
 class Url
 {

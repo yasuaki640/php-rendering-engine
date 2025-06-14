@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace MyApp\Core\Renderer\Layout;
+namespace Yasuaki640\PhpRenderingEngine\Core\Renderer\Layout;
 
-use MyApp\Core\Renderer\Dom\ElementKind;
-use MyApp\Core\Renderer\Dom\Node;
-use MyApp\Core\Renderer\Dom\NodeKind;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\ElementKind;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\Node;
+use Yasuaki640\PhpRenderingEngine\Core\Renderer\Dom\NodeKind;
 
 enum TextDecoration
 {
