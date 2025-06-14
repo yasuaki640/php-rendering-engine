@@ -32,7 +32,7 @@ class Api
             // 新しいElementを作成して比較（Rustのロジックと同等）
             $targetElement = new Element($elementKind->value, []);
             $currentElement = $node->getElement();
-            
+
             if ($currentElement !== null && $currentElement->getKind() === $targetElement->getKind()) {
                 return $node;
             }

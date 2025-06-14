@@ -36,7 +36,7 @@ class LayoutViewTest extends TestCase
         $root = $layoutView->getRoot();
         $this->assertNotNull($root);
         $this->assertEquals(LayoutObjectKind::Block, $root->getKind());
-        
+
         // PHP版では、getNodeKind()はElementオブジェクトを直接返す
         $nodeKind = $root->getNodeKind();
         $this->assertInstanceOf(Element::class, $nodeKind);
@@ -51,7 +51,7 @@ class LayoutViewTest extends TestCase
         $root = $layoutView->getRoot();
         $this->assertNotNull($root);
         $this->assertEquals(LayoutObjectKind::Block, $root->getKind());
-        
+
         // PHP版では、getNodeKind()はElementオブジェクトを直接返す
         $nodeKind = $root->getNodeKind();
         $this->assertInstanceOf(Element::class, $nodeKind);
@@ -60,7 +60,7 @@ class LayoutViewTest extends TestCase
         $text = $root->getFirstChild();
         $this->assertNotNull($text);
         $this->assertEquals(LayoutObjectKind::Text, $text->getKind());
-        
+
         // PHP版では、Textノードの場合は文字列を直接返す
         $textNodeKind = $text->getNodeKind();
         $this->assertEquals("text", $textNodeKind);
@@ -97,7 +97,7 @@ HTML;
         $root = $layoutView->getRoot();
         $this->assertNotNull($root);
         $this->assertEquals(LayoutObjectKind::Block, $root->getKind());
-        
+
         // PHP版では、getNodeKind()はElementオブジェクトを直接返す
         $rootNodeKind = $root->getNodeKind();
         $this->assertInstanceOf(Element::class, $rootNodeKind);
@@ -106,7 +106,7 @@ HTML;
         $p = $root->getFirstChild();
         $this->assertNotNull($p);
         $this->assertEquals(LayoutObjectKind::Block, $p->getKind());
-        
+
         $pNodeKind = $p->getNodeKind();
         $this->assertInstanceOf(Element::class, $pNodeKind);
         $this->assertEquals(ElementKind::P, $pNodeKind->getKind());
