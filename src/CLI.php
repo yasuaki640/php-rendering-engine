@@ -15,8 +15,6 @@ class CLI
 
         if (count($args) > 1 && $args[1] === 'test-http') {
             $this->testHttpClient();
-        } elseif (count($args) > 1 && $args[1] === 'test-host') {
-            $this->testHostClient();
         } elseif (count($args) > 1 && $args[1] === 'test-example') {
             $this->testExampleCom();
         } elseif (count($args) > 1 && $args[1] === 'test-browser') {
@@ -24,7 +22,6 @@ class CLI
         } else {
             echo "Available commands:\n";
             echo "  test-http     - Test HTTP client with httpbin.org\n";
-            echo "  test-host     - Test HTTP client with host.test:8000\n";
             echo "  test-example  - Test HTTP client with example.com\n";
             echo "  test-browser  - Test Browser and Page classes\n";
             echo "\nUsage: php bin/hello <command>\n";
@@ -38,23 +35,6 @@ class CLI
         try {
             // 実際にアクセス可能なホストでテスト
             $response = $client->get("httpbin.org", 80, "get");
-            echo "response:\n";
-            $this->printResponse($response);
-        } catch (\Exception $e) {
-            echo "error:\n";
-            echo $e->getMessage() . "\n";
-            echo "Stack trace:\n";
-            echo $e->getTraceAsString() . "\n";
-        }
-    }
-
-    private function testHostClient(): void
-    {
-        $client = new HttpClient();
-
-        try {
-            // Rustコードと同じパラメータでテスト: host.test:8000/test.html
-            $response = $client->get("host.test", 8000, "test.html");
             echo "response:\n";
             $this->printResponse($response);
         } catch (\Exception $e) {
