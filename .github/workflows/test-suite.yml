@@ -108,7 +108,43 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-composer-
 
-    - name: Install dependencies
+    - name: Install main dependencies
+      run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+    - name: Cache core package Composer dependencies
+      uses: actions/cache@v3
+      with:
+        path: packages/core/vendor
+        key: ${{ runner.os }}-core-composer-${{ hashFiles('packages/core/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-core-composer-
+
+    - name: Install core package dependencies
+      working-directory: packages/core
+      run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+    - name: Cache net package Composer dependencies
+      uses: actions/cache@v3
+      with:
+        path: packages/net/vendor
+        key: ${{ runner.os }}-net-composer-${{ hashFiles('packages/net/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-net-composer-
+
+    - name: Install net package dependencies
+      working-directory: packages/net
+      run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+    - name: Cache uri-parser package Composer dependencies
+      uses: actions/cache@v3
+      with:
+        path: packages/uri-parser/vendor
+        key: ${{ runner.os }}-uri-parser-composer-${{ hashFiles('packages/uri-parser/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-uri-parser-composer-
+
+    - name: Install uri-parser package dependencies
+      working-directory: packages/uri-parser
       run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
     - name: Check main code style
