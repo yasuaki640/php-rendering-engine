@@ -104,3 +104,6 @@ tokenizeHtml('<script>console.log("Hello");</script>');
 
 // 8. 複数の属性のパターン
 tokenizeHtml('<input type="text" placeholder=\'Enter name\' required>');
+
+// 9. 現在のHTMLファイルの例
+tokenizeHtml('<html><head></head><body><h1>fuga</h1></body></html>');
