@@ -29,6 +29,8 @@ class CLI
             $this->renderSamplePages();
         } elseif (count($args) > 1 && $args[1] === 'render-example') {
             $this->renderExample();
+        } elseif (count($args) > 1 && $args[1] === 'raw-http') {
+            $this->generateRawHttpRequest();
         } else {
             echo "Available commands:\n";
             echo "  test-http           - Test HTTP client with httpbin.org\n";
@@ -37,6 +39,7 @@ class CLI
             echo "  test-browser-example - Run detailed BrowserExample class\n";
             echo "  render-samples      - Render all sample HTML pages to images (ch6 app.rs equivalent)\n";
             echo "  render-example      - Render example.com using net and uri-parser packages\n";
+            echo "  raw-http           - Generate raw HTTP request strings\n";
             echo "\nUsage: php bin/hello <command>\n";
         }
     }
@@ -327,5 +330,97 @@ HTML;
             echo "Line: " . $e->getLine() . "\n";
             echo "Stack trace:\n" . $e->getTraceAsString() . "\n";
         }
+    }
+
+    private function generateRawHttpRequest(): void
+    {
+        echo "=== Raw HTTP Request Generator ===\n\n";
+
+        $requests = [
+            [
+                'name' => 'Simple GET Request',
+                'method' => 'GET',
+                'path' => '/',
+                'host' => 'example.com',
+                'headers' => [
+                    'Host' => 'example.com',
+                    'User-Agent' => 'Mozilla/5.0 (compatible; PHP-Rendering-Engine/1.0)',
+                    'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                    'Accept-Language' => 'en-US,en;q=0.5',
+                    'Accept-Encoding' => 'gzip, deflate',
+                    'Connection' => 'keep-alive'
+                ]
+            ],
+            [
+                'name' => 'GET Request with Query Parameters',
+                'method' => 'GET',
+                'path' => '/search?q=php&category=web',
+                'host' => 'api.example.com',
+                'headers' => [
+                    'Host' => 'api.example.com',
+                    'User-Agent' => 'PHP-Rendering-Engine/1.0',
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer your-token-here',
+                    'Connection' => 'close'
+                ]
+            ],
+            [
+                'name' => 'POST Request with JSON Body',
+                'method' => 'POST',
+                'path' => '/api/users',
+                'host' => 'api.example.com',
+                'headers' => [
+                    'Host' => 'api.example.com',
+                    'User-Agent' => 'PHP-Rendering-Engine/1.0',
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Content-Length' => '45',
+                    'Connection' => 'close'
+                ],
+                'body' => '{"name":"John Doe","email":"john@example.com"}'
+            ],
+            [
+                'name' => 'POST Request with Form Data',
+                'method' => 'POST',
+                'path' => '/login',
+                'host' => 'secure.example.com',
+                'headers' => [
+                    'Host' => 'secure.example.com',
+                    'User-Agent' => 'Mozilla/5.0 (compatible; PHP-Rendering-Engine/1.0)',
+                    'Content-Type' => 'application/x-www-form-urlencoded',
+                    'Content-Length' => '33',
+                    'Accept' => 'text/html,application/xhtml+xml',
+                    'Connection' => 'keep-alive'
+                ],
+                'body' => 'username=admin&password=secret123'
+            ]
+        ];
+
+        foreach ($requests as $i => $request) {
+            echo "--- " . ($i + 1) . ". " . $request['name'] . " ---\n";
+            echo $this->buildRawHttpRequest($request);
+            echo "\n" . str_repeat("-", 50) . "\n\n";
+        }
+
+        echo "=== End of Raw HTTP Request Examples ===\n";
+    }
+
+    private function buildRawHttpRequest(array $request): string
+    {
+        $raw = '';
+        
+        $raw .= $request['method'] . ' ' . $request['path'] . " HTTP/1.1\r\n";
+        
+        foreach ($request['headers'] as $name => $value) {
+            $raw .= $name . ': ' . $value . "\r\n";
+        }
+        
+        $raw .= "\r\n";
+        
+        if (isset($request['body'])) {
+            $raw .= $request['body'];
+        }
+        
+        return $raw;
     }
 }

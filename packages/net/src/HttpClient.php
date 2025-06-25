@@ -43,6 +43,7 @@ class HttpClient
         $request .= "Connection: close\r\n";
         $request .= "\r\n";
 
+        // リクエストの送信
         $bytes_written = socket_write($socket, $request, strlen($request));
         if ($bytes_written === false) {
             socket_close($socket);
